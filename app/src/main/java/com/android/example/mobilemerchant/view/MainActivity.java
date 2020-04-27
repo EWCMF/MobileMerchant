@@ -1,12 +1,8 @@
 package com.android.example.mobilemerchant.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -14,7 +10,7 @@ import android.widget.TextView;
 
 import com.android.example.mobilemerchant.R;
 import com.android.example.mobilemerchant.persistence.AppDatabase;
-import com.android.example.mobilemerchant.persistence.User;
+import com.android.example.mobilemerchant.data.DebtOwed;
 
 public class MainActivity extends AppCompatActivity {
     Spinner languageSpinner;
@@ -30,15 +26,9 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                User testUser = new User();
-                testUser.firstName = "Tommy";
-                testUser.lastName = "Hansen";
-                try {
-                    db.userDao().insertAll(testUser);
-                }
-                catch (SQLiteConstraintException sq) {
-                    Log.d("SQL", "Already added.");
-                }
+                db.debtOwedDao().nukeTable();
+                DebtOwed testDebtOwed = new DebtOwed("Tommy", 500, "DKK");
+                db.debtOwedDao().insertAll(testDebtOwed);
             }
         });
         thread.start();
