@@ -19,10 +19,10 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debtYouText" />
+        app:layout_constraintTop_toBottomOf="@+id/debtYouTestText" />
 
     <TextView
-        android:id="@+id/debtYouText"
+        android:id="@+id/debtYouTestText"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:background="@drawable/back"

@@ -9,8 +9,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.example.mobilemerchant.R;
+import com.android.example.mobilemerchant.data.DebtOwedToYou;
 import com.android.example.mobilemerchant.persistence.AppDatabase;
-import com.android.example.mobilemerchant.data.DebtOwed;
+import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 
 public class MainActivity extends AppCompatActivity {
     Spinner languageSpinner;
@@ -26,9 +27,12 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                db.debtOwedDao().nukeTable();
-                DebtOwed testDebtOwed = new DebtOwed("Tommy", 500, "DKK");
-                db.debtOwedDao().insertAll(testDebtOwed);
+                db.debtOwedToOthersDao().nukeTable();
+                db.debtOwedToYouDao().nukeTable();
+                DebtOwedToOthers testDebtOwedToOthers = new DebtOwedToOthers("Tommy", 500, "DKK");
+                DebtOwedToYou test2 = new DebtOwedToYou("Unlucky", 200, "DKK");
+                db.debtOwedToOthersDao().insertAll(testDebtOwedToOthers);
+                db.debtOwedToYouDao().insertAll(test2);
             }
         });
         thread.start();
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView debtToYou = findViewById(R.id.debtYouText);
+        TextView debtToYou = findViewById(R.id.debtYouTestText);
         debtToYou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

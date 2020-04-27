@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.android.example.mobilemerchant.R;
 import com.android.example.mobilemerchant.persistence.AppDatabase;
-import com.android.example.mobilemerchant.data.DebtOwed;
+import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 
 public class DebtOwedToOthersActivity extends Activity {
     AppDatabase db;
@@ -20,19 +20,19 @@ public class DebtOwedToOthersActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debtothers);
         db = AppDatabase.getDatabase(this);
-        textView = findViewById(R.id.textView);
+        textView = findViewById(R.id.debtOthersTestText);
     }
 
     public void buttonTest(View view) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                final DebtOwed debtOwed = db.debtOwedDao().findByName("Tommy");
+                final DebtOwedToOthers debtOwedToOthers = db.debtOwedToOthersDao().findByName("Tommy");
                 Handler refresh = new Handler(Looper.getMainLooper());
                 refresh.post(new Runnable() {
                     public void run()
                     {
-                        String text = debtOwed.getName() + " " + debtOwed.getAmountOwed() + " " + debtOwed.getCurrencyName();
+                        String text = debtOwedToOthers.getName() + " " + debtOwedToOthers.getAmountOwed() + " " + debtOwedToOthers.getCurrencyName();
                         textView.setText(text);
                     }
                 });
