@@ -47,6 +47,9 @@ public class CurrencyConverterActivity extends Activity {
     }
 
     public void convert(View view) {
+        if (input.getText().toString().equals("")) {
+            return;
+        }
         final double inputNum = Double.parseDouble(input.getText().toString());
         final String currency1 = currencyFromSpinner.getSelectedItem().toString();
         final String currency2 = currencyToSpinner.getSelectedItem().toString();
