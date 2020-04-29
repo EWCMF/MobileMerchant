@@ -7,87 +7,78 @@
     android:background="#838282"
     tools:context=".view.MainActivity">
 
+
     <TextView
         android:id="@+id/debtOthersText"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:background="@drawable/back"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/radius"
         android:gravity="center"
         android:text="@string/debtOwedToOthersTitle"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debtYouTestText" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:id="@+id/debtYouTestText"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:background="@drawable/back"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/radius"
         android:gravity="center"
         android:text="@string/debtOwedToYouTitle"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currencyText" />
+        app:layout_constraintLeft_toRightOf="@id/debtOthersText"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="35dp"/>
 
     <TextView
         android:id="@+id/calculatorText"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:background="@drawable/back"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/radius"
         android:gravity="center"
         android:text="@string/calculatorTitle"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/currencyText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/debtOthersText"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="30dp"/>
 
     <TextView
         android:id="@+id/currencyText"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:background="@drawable/back"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/radius"
         android:gravity="center"
         android:text="@string/CurrencyConverterTitle"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calculatorText" />
+        app:layout_constraintLeft_toRightOf="@id/calculatorText"
+        app:layout_constraintTop_toBottomOf="@id/debtOthersText"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="35dp"/>
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="0dp"
+        android:layout_width="182dp"
         android:layout_height="32dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debtOthersText"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintTop_toBottomOf="@+id/languageText" />
 
     <TextView
         android:id="@+id/languageText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:text="@string/languageTitle"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debtOthersText"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/calculatorText"
+        android:layout_marginTop="30dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
