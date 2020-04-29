@@ -41,8 +41,11 @@ public class CurrencyConverterActivity extends Activity {
 
         input = findViewById(R.id.inputEditText);
         inputNumber = findViewById(R.id.inputResultTextView);
+        inputNumber.setVisibility(View.INVISIBLE);
         result = findViewById(R.id.resultNumberTextView);
+        result.setVisibility(View.INVISIBLE);
         exchangeRate = findViewById(R.id.exchangeRateNumberTextView);
+        exchangeRate.setVisibility(View.INVISIBLE);
 
     }
 
@@ -69,8 +72,11 @@ public class CurrencyConverterActivity extends Activity {
                         public void run()
                         {
                             inputNumber.setText(inputText);
+                            inputNumber.setVisibility(View.VISIBLE);
                             result.setText(resultText);
+                            result.setVisibility(View.VISIBLE);
                             exchangeRate.setText(exchangeRateFormatted);
+                            exchangeRate.setVisibility(View.VISIBLE);
                         }
                     });
 

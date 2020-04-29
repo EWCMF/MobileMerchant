@@ -10,6 +10,13 @@
         <item>Danish</item>
         <item>Hebrew</item>
     </string-array>
+    <!-- Currency converter strings here-->
+    <string name="currencyTo">To</string>
+    <string name="currencyEditTextHint">Value here</string>
+    <string name="currencyInputText">Input:</string>
+    <string name="currencyResultText">Result:</string>
+    <string name="currencyExchangeRateText">Exchange rate:</string>
+    <string name="currencyConvertButtonText">Convert</string>
     <string-array name="currenciesAvailable">
         <item>DKK</item>
         <item>USD</item>
