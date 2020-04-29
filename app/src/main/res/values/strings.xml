@@ -10,4 +10,13 @@
         <item>Danish</item>
         <item>Hebrew</item>
     </string-array>
+    <string-array name="currenciesAvailable">
+        <item>DKK</item>
+        <item>USD</item>
+        <item>EUR</item>
+        <item>GBP</item>
+        <item>SEK</item>
+        <item>NOK</item>
+        <item>JPY</item>
+    </string-array>
 </resources>
