@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#838282"
     tools:context=".view.MainActivity">
 
     <TextView
@@ -57,10 +58,10 @@
         android:id="@+id/currencyText"
         android:layout_width="0dp"
         android:layout_height="64dp"
+        android:background="@drawable/back"
         android:gravity="center"
         android:text="@string/CurrencyConverterTitle"
         android:textStyle="bold"
-        android:background="@drawable/back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calculatorText" />
