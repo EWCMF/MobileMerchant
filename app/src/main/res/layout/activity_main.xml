@@ -16,10 +16,15 @@
         android:gravity="center"
         android:text="@string/debtOwedToOthersTitle"
         android:textStyle="bold"
+        android:drawableStart="@drawable/debt_other_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="35dp"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"/>
+
+
+
+            />
 
     <TextView
         android:id="@+id/debtYouTestText"
@@ -29,6 +34,7 @@
         android:gravity="center"
         android:text="@string/debtOwedToYouTitle"
         android:textStyle="bold"
+        android:drawableStart="@drawable/debt_you_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/debtOthersText"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +42,7 @@
         android:layout_marginRight="35dp"/>
 
     <TextView
+
         android:id="@+id/calculatorText"
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -43,6 +50,7 @@
         android:gravity="center"
         android:text="@string/calculatorTitle"
         android:textStyle="bold"
+        android:drawableStart="@drawable/calculator_icon"
         app:layout_constraintRight_toLeftOf="@id/currencyText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/debtOthersText"
@@ -57,6 +65,7 @@
         android:gravity="center"
         android:text="@string/CurrencyConverterTitle"
         android:textStyle="bold"
+        android:drawableStart="@drawable/converter_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/calculatorText"
         app:layout_constraintTop_toBottomOf="@id/debtOthersText"
@@ -80,5 +89,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calculatorText"
         android:layout_marginTop="30dp"/>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
