@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MobileMerchant</string>
+    <string name="app_name">Mobile Merchant</string>
     <string name="calculatorTitle">Calculator</string>
     <string name="CurrencyConverterTitle">Currency Converter</string>
     <string name="debtOwedToYouTitle">Debt Owed To You</string>
