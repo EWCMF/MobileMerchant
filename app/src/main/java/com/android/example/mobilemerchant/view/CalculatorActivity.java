@@ -53,8 +53,8 @@ public class CalculatorActivity extends Activity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvInput.setText("");
-                tvOutput.setText("");
+                tvInput.setText(" ");
+                tvOutput.setText(" ");
             }
         });
 
