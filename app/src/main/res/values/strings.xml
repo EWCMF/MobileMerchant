@@ -17,6 +17,10 @@
     <string name="currencyResultText">Result:</string>
     <string name="currencyExchangeRateText">Exchange rate:</string>
     <string name="currencyConvertButtonText">Convert</string>
+    <string name="currencySameCurrencyException">The two selected currencies cannot be the same.</string>
+    <string name="currencyCurrencyNotSupportedException">One of the selected currencies is currently not allowed.</string>
+    <string name="currencyNegativeInputException">Input value cannot be below 0.</string>
+    <string name="currencyInputEmpty">Input is empty</string>
     <string-array name="currenciesAvailable">
         <item>DKK</item>
         <item>USD</item>

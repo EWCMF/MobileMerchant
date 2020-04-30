@@ -1,5 +1,8 @@
 package com.android.example.mobilemerchant.logic;
 
+import com.android.example.mobilemerchant.logic.exceptions.CurrencyNotSupportedException;
+import com.android.example.mobilemerchant.logic.exceptions.NegativeInputException;
+import com.android.example.mobilemerchant.logic.exceptions.SameCurrencyException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,12 +27,15 @@ public class CurrencyConverter {
         allowedCurrencies.add("JPY");
     }
 
-    public void convert(double input, String currencyFrom, String currencyTo) throws IOException {
+    public void convert(double input, String currencyFrom, String currencyTo) throws IOException, SameCurrencyException, CurrencyNotSupportedException, NegativeInputException {
+        if (currencyFrom.equals(currencyTo)) {
+            throw new SameCurrencyException("The two selected currencies cannot be the same");
+        }
         if (!allowedCurrencies.contains(currencyFrom) || !allowedCurrencies.contains(currencyTo)) {
-            return;
+            throw new CurrencyNotSupportedException("One of the selected currencies is currently not allowed.");
         }
         if (input < 0) {
-            return;
+            throw new NegativeInputException("Input value cannot be below 0");
         }
         JsonNode root = new ObjectMapper().readTree(new URL("https://api.exchangeratesapi.io/latest?base=" + currencyFrom));
         this.input = input;
