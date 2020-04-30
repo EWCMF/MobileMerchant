@@ -1,260 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#838282"
     tools:context=".view.CalculatorActivity">
-
-    <EditText
-        android:id="@+id/sum"
+    <include
+        layout="@layout/input_layout_calculator"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="#838282"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/buttonAC"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:backgroundTint="@color/colorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sum"
-        android:text="AC"
-        android:textSize="38dp"/>
+    </include>
 
-    <Button
-        android:id="@+id/buttonNum7"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:text="7"
-        android:textSize="38dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAC" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
 
-    <Button
-        android:id="@+id/buttonNum4"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:text="4"
-        android:textSize="38dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNum7" />
+        <include
+            layout="@layout/buttons_calculator"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
 
-    <Button
-        android:id="@+id/buttonNum1"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-
-        android:background="@drawable/radius"
-        android:text="1"
-        android:textSize="38dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNum4" />
-
-    <Button
-        android:id="@+id/buttonNum0"
-        android:layout_width="185dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:text="0"
-        android:textSize="38dp"
+        </include>
+    </RelativeLayout>
 
 
-        android:background="@drawable/radius"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNum1" />
-
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/title_color"
-        android:background="@drawable/radius"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum3"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSubstract"
-        android:text="+"
-        android:textSize="38dp"/>
-
-    <Button
-        android:id="@+id/buttonNum3"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:text="3"
-        android:textSize="38dp"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum2"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNum6" />
-
-    <Button
-        android:id="@+id/buttonComma"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum0"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNum3"
-        android:text=","
-        android:textSize="38dp"/>
-
-    <Button
-        android:id="@+id/buttonTotal"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-
-        android:backgroundTint="@color/title_color"
-        android:background="@drawable/radius"
-        app:layout_constraintStart_toEndOf="@+id/buttonComma"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAdd"
-        android:text="="
-        android:textSize="38dp"/>
-
-    <Button
-        android:id="@+id/buttonNum2"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:text="2"
-        android:textSize="38dp"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum1"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNum5" />
-
-    <Button
-        android:id="@+id/buttonSubstract"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/title_color"
-        android:background="@drawable/radius"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum6"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMultiply"
-        android:text="-"
-        android:textSize="38dp"/>
-
-    <Button
-        android:id="@+id/buttonNum6"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:text="6"
-        android:textSize="38dp"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum5"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNum9" />
-
-    <Button
-        android:id="@+id/buttonNum5"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:text="5"
-        android:textSize="38dp"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum4"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNum8" />
-
-    <Button
-        android:id="@+id/buttonNum8"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:text="8"
-        android:textSize="38dp"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum7"
-        app:layout_constraintTop_toBottomOf="@+id/buttonChange" />
-
-    <Button
-        android:id="@+id/buttonNum9"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum8"
-        app:layout_constraintTop_toBottomOf="@+id/buttonProcent"
-        android:text="9"
-        android:textSize="38dp"/>
-
-    <Button
-        android:id="@+id/buttonMultiply"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/title_color"
-        android:background="@drawable/radius"
-        app:layout_constraintStart_toEndOf="@+id/buttonNum9"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDivide"
-        android:text="*"
-        android:textSize="38dp"/>
-
-    <Button
-        android:id="@+id/buttonProcent"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:backgroundTint="@color/colorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/buttonChange"
-        app:layout_constraintTop_toBottomOf="@+id/sum"
-        android:text="%"
-        android:textSize="38dp"/>
-
-    <Button
-        android:id="@+id/buttonDivide"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:backgroundTint="@color/title_color"
-        app:layout_constraintStart_toEndOf="@+id/buttonProcent"
-        app:layout_constraintTop_toBottomOf="@+id/sum"
-        android:text="/"
-        android:textSize="38dp"/>
-
-    <Button
-        android:id="@+id/buttonChange"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/radius"
-        android:backgroundTint="@color/colorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/buttonAC"
-        app:layout_constraintTop_toBottomOf="@+id/sum"
-        android:text="+/-"
-        android:textSize="38dp"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
