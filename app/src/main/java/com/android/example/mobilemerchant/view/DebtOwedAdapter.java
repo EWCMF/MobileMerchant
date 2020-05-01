@@ -1,41 +1,64 @@
 package com.android.example.mobilemerchant.view;
 
-import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.example.mobilemerchant.R;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class DebtOwedAdapter extends ArrayAdapter<DebtOwedToOthers> {
-    public DebtOwedAdapter(Activity context, ArrayList<DebtOwedToOthers> arrayList) {
-        super(context, 0, arrayList);
+public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHolder> {
+    private List<DebtOwedToOthers> debtOwedToOthers = new ArrayList<>();
+    private ItemClickListener clickListener;
+
+    @Override
+    public DebtHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.debt_list_item, parent, false);
+        return new DebtHolder(view);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View listItemView = convertView;
-        if(listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.debt_list_item, parent, false);
+    public void onBindViewHolder(DebtHolder holder, int position) {
+        DebtOwedToOthers current = debtOwedToOthers.get(position);
+        holder.name.setText(current.getName());
+        holder.amount.setText(current.getAmountOwed() + " " + current.getCurrencyName());
+    }
+
+    @Override
+    public int getItemCount() {
+        return debtOwedToOthers.size();
+    }
+
+    public void setDebtOwedToOthers(List<DebtOwedToOthers> debtOwedToOthers) {
+        this.debtOwedToOthers = debtOwedToOthers;
+        notifyDataSetChanged();
+    }
+
+    public void setClickListener(ItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    class DebtHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView name;
+        TextView amount;
+
+        public DebtHolder(View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.listPersonName);
+            amount = itemView.findViewById(R.id.listPersonAmount);
+            itemView.setOnClickListener(this);
         }
 
-        DebtOwedToOthers currentDebt = getItem(position);
-        TextView nameTextView = listItemView.findViewById(R.id.listPersonName);
-        assert currentDebt != null;
-        nameTextView.setText(currentDebt.getName());
-
-        TextView amountTextView = listItemView.findViewById(R.id.listPersonAmount);
-        String amountConcat = currentDebt.getAmountOwed() + " " + currentDebt.getCurrencyName();
-        amountTextView.setText(amountConcat);
-
-        return listItemView;
-
+        @Override
+        public void onClick(View v) {
+            if (clickListener != null) {
+                clickListener.onClick(v, getAdapterPosition());
+            }
+        }
     }
 }

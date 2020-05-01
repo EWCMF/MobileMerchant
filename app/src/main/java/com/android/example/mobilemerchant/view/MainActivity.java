@@ -17,31 +17,14 @@ import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 
 public class MainActivity extends AppCompatActivity {
     Spinner languageSpinner;
-    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = AppDatabase.getDatabase(this);
-
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_layout);
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                db.debtOwedToOthersDao().nukeTable();
-                db.debtOwedToYouDao().nukeTable();
-                DebtOwedToOthers testDebtOwedToOthers = new DebtOwedToOthers(1,"Tommy", 500, "DKK");
-                DebtOwedToOthers testDebtOwedToOthers2 = new DebtOwedToOthers(2,"Marc", 600, "DKK");
-                DebtOwedToYou test2 = new DebtOwedToYou("Unlucky", 200, "DKK");
-                db.debtOwedToOthersDao().insertAll(testDebtOwedToOthers, testDebtOwedToOthers2);
-                db.debtOwedToYouDao().insertAll(test2);
-            }
-        });
-        thread.start();
 
         languageSpinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.languageChoices,

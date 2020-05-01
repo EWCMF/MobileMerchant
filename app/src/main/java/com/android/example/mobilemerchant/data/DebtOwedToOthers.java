@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class DebtOwedToOthers {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int owedID;
 
     @ColumnInfo(name = "name")
@@ -18,8 +18,7 @@ public class DebtOwedToOthers {
     @ColumnInfo(name = "currency")
     private String currencyName;
 
-    public DebtOwedToOthers(int owedID, String name, double amountOwed, String currencyName) {
-        this.owedID = owedID;
+    public DebtOwedToOthers(String name, double amountOwed, String currencyName) {
         this.name = name;
         this.amountOwed = amountOwed;
         this.currencyName = currencyName;

@@ -1,5 +1,6 @@
 package com.android.example.mobilemerchant.persistence;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -14,7 +15,7 @@ import java.util.List;
 @Dao
 public interface DebtOwedToOthersDao {
     @Query("SELECT * FROM DebtOwedToOthers")
-    List<DebtOwedToOthers> getAll();
+    LiveData<List<DebtOwedToOthers>> getAll();
 
     @Query("SELECT * FROM DebtOwedToOthers WHERE owedID IN (:userIds)")
     List<DebtOwedToOthers> loadAllByIds(int[] userIds);
