@@ -4,40 +4,38 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.android.example.mobilemerchant.R;
 import com.android.example.mobilemerchant.persistence.AppDatabase;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DebtOwedToOthersActivity extends Activity {
     AppDatabase db;
-    TextView textView;
+    ListView listView;
+    ArrayList<DebtOwedToOthers> debtOwedToOthers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debtothers);
         db = AppDatabase.getDatabase(this);
-        textView = findViewById(R.id.debtOthersTestText);
+        listView = findViewById(R.id.listView);
+        debtOwedToOthers = new ArrayList<>();
+        populateList();
+
     }
 
-    public void buttonTest(View view) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final DebtOwedToOthers debtOwedToOthers = db.debtOwedToOthersDao().findByName("Tommy");
-                Handler refresh = new Handler(Looper.getMainLooper());
-                refresh.post(new Runnable() {
-                    public void run()
-                    {
-                        String text = debtOwedToOthers.getName() + " " + debtOwedToOthers.getAmountOwed() + " " + debtOwedToOthers.getCurrencyName();
-                        textView.setText(text);
-                    }
-                });
+    private void populateList() {
+        Thread thread = new Thread(() -> {
+            List<DebtOwedToOthers> list = db.debtOwedToOthersDao().getAll();
+            debtOwedToOthers.addAll(list);
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(() -> listView.setAdapter(new DebtOwedAdapter(this, debtOwedToOthers)));
 
-            }
         });
         thread.start();
 

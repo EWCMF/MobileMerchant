@@ -18,7 +18,8 @@ public class DebtOwedToOthers {
     @ColumnInfo(name = "currency")
     private String currencyName;
 
-    public DebtOwedToOthers(String name, double amountOwed, String currencyName) {
+    public DebtOwedToOthers(int owedID, String name, double amountOwed, String currencyName) {
+        this.owedID = owedID;
         this.name = name;
         this.amountOwed = amountOwed;
         this.currencyName = currencyName;

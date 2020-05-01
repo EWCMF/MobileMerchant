@@ -34,9 +34,10 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 db.debtOwedToOthersDao().nukeTable();
                 db.debtOwedToYouDao().nukeTable();
-                DebtOwedToOthers testDebtOwedToOthers = new DebtOwedToOthers("Tommy", 500, "DKK");
+                DebtOwedToOthers testDebtOwedToOthers = new DebtOwedToOthers(1,"Tommy", 500, "DKK");
+                DebtOwedToOthers testDebtOwedToOthers2 = new DebtOwedToOthers(2,"Marc", 600, "DKK");
                 DebtOwedToYou test2 = new DebtOwedToYou("Unlucky", 200, "DKK");
-                db.debtOwedToOthersDao().insertAll(testDebtOwedToOthers);
+                db.debtOwedToOthersDao().insertAll(testDebtOwedToOthers, testDebtOwedToOthers2);
                 db.debtOwedToYouDao().insertAll(test2);
             }
         });
