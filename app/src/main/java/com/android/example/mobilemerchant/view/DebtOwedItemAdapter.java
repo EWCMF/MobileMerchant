@@ -10,13 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.example.mobilemerchant.R;
-import com.android.example.mobilemerchant.data.DebtOwedItem;
+import com.android.example.mobilemerchant.data.DebtOthersItem;
+import com.android.example.mobilemerchant.data.DebtYouItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapter.DebtItemHolder> {
-    private List<DebtOwedItem> debtOwedItems = new ArrayList<>();
+    private List<DebtOthersItem> debtOthersItems = new ArrayList<>();
+    private List<DebtYouItem> debtYouItems = new ArrayList<>();
+    private boolean toOthers;
+
+    DebtOwedItemAdapter(boolean toOthers) {
+        this.toOthers = toOthers;
+    }
 
     @NonNull
     @Override
@@ -27,17 +34,33 @@ public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapte
 
     @Override
     public void onBindViewHolder(@NonNull DebtItemHolder holder, int position) {
-        holder.name.setText(debtOwedItems.get(position).getItemName());
-        holder.amount.setText(debtOwedItems.get(position).getValue() + " " + debtOwedItems.get(position).getCurrency());
+        if (toOthers) {
+            holder.name.setText(debtOthersItems.get(position).getItemName());
+            holder.amount.setText(debtOthersItems.get(position).getValue() + " " + debtOthersItems.get(position).getCurrency());
+        }
+        else {
+            holder.name.setText(debtYouItems.get(position).getItemName());
+            holder.amount.setText(debtYouItems.get(position).getValue() + " " + debtYouItems.get(position).getCurrency());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return debtOwedItems.size();
+        if (toOthers) {
+            return debtOthersItems.size();
+        }
+        else {
+            return debtYouItems.size();
+        }
     }
 
-    public void setDebtOwedItems(List<DebtOwedItem> debtOwedItems) {
-        this.debtOwedItems = debtOwedItems;
+    public void setDebtOthersItems(List<DebtOthersItem> debtOthersItems) {
+        this.debtOthersItems = debtOthersItems;
+        notifyDataSetChanged();
+    }
+
+    public void setDebtYouItems(List<DebtYouItem> debtYouItems) {
+        this.debtYouItems = debtYouItems;
         notifyDataSetChanged();
     }
 

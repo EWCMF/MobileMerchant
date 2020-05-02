@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.example.mobilemerchant.R;
+import com.android.example.mobilemerchant.data.DebtOthersItem;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 import com.android.example.mobilemerchant.data.DebtOwedToYou;
 import com.android.example.mobilemerchant.presentation.DebtOwedOthersViewModel;
@@ -76,10 +77,10 @@ public class DebtOwedActivity extends ComponentActivity implements ItemClickList
 
     private void addToDB(String name, double value, String currency) {
         if (toOthers) {
-            debtOwedOthersViewModel.insert(new DebtOwedToOthers(name, value, currency));
+            debtOwedOthersViewModel.insert(new DebtOwedToOthers(1, name, value, currency));
         }
         else {
-            debtOwedYouViewModel.insert(new DebtOwedToYou(name, value, currency));
+            debtOwedYouViewModel.insert(new DebtOwedToYou(1, name, value, currency));
         }
     }
 
@@ -98,10 +99,9 @@ public class DebtOwedActivity extends ComponentActivity implements ItemClickList
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.list_constraintLayout) {
-            Log.d("test1", item.getTitle().toString());
+
         } else if (item.getItemId() == R.id.sublist_constraintLayout) {
-            Log.d("test2", item.getGroupId() + "");
-            Log.d("test3", item.getTitle().toString());
+
         }
         return super.onContextItemSelected(item);
     }

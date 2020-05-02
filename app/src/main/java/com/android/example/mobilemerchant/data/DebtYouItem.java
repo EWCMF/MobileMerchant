@@ -2,15 +2,24 @@ package com.android.example.mobilemerchant.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
-public class DebtOwedItem {
+@Entity(
+        foreignKeys = @ForeignKey(
+        entity = DebtOwedToYou.class,
+        parentColumns = "owedID",
+        childColumns = "debtOwnerID",
+                onDelete = ForeignKey.CASCADE
+        ), indices = @Index(value = "debtOwnerID")
+)
+public class DebtYouItem {
     @PrimaryKey(autoGenerate = true)
     private int itemID;
 
-    @ColumnInfo(name = "owner_id")
-    private int ownerID;
+    @ColumnInfo(name = "debtOwnerID")
+    private int debtOwnerID;
 
     @ColumnInfo(name = "item_name")
     private String itemName;
@@ -21,7 +30,8 @@ public class DebtOwedItem {
     @ColumnInfo(name = "currency")
     private String currency;
 
-    public DebtOwedItem(String itemName, double value, String currency) {
+    public DebtYouItem(int debtOwnerID, String itemName, double value, String currency) {
+        this.debtOwnerID = debtOwnerID;
         this.itemName = itemName;
         this.value = value;
         this.currency = currency;
@@ -33,14 +43,6 @@ public class DebtOwedItem {
 
     public void setItemID(int itemID) {
         this.itemID = itemID;
-    }
-
-    public int getOwnerID() {
-        return ownerID;
-    }
-
-    public void setOwnerID(int ownerID) {
-        this.ownerID = ownerID;
     }
 
     public String getItemName() {
@@ -65,5 +67,13 @@ public class DebtOwedItem {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public int getDebtOwnerID() {
+        return debtOwnerID;
+    }
+
+    public void setDebtOwnerID(int debtOwnerID) {
+        this.debtOwnerID = debtOwnerID;
     }
 }

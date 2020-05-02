@@ -61,7 +61,6 @@ public class CurrencyConverterActivity extends Activity {
         final double inputNum = Double.parseDouble(input.getText().toString());
         final String currency1 = currencyFromSpinner.getSelectedItem().toString();
         final String currency2 = currencyToSpinner.getSelectedItem().toString();
-        Log.v("Test", "" + inputNum + " " + currency1 + " " + currency2);
         Thread thread = new Thread(() -> {
             try {
                 currencyConverter.convert(inputNum, currency1, currency2);

@@ -2,11 +2,14 @@ package com.android.example.mobilemerchant.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import java.util.List;
 
 @Entity
 public class DebtOwedToOthers {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int owedID;
 
     @ColumnInfo(name = "name")
@@ -18,7 +21,11 @@ public class DebtOwedToOthers {
     @ColumnInfo(name = "currency")
     private String currencyName;
 
-    public DebtOwedToOthers(String name, double amountOwed, String currencyName) {
+    @Ignore
+    private List<DebtOthersItem> debtOthersItems;
+
+    public DebtOwedToOthers(int owedID, String name, double amountOwed, String currencyName) {
+        this.owedID = owedID;
         this.name = name;
         this.amountOwed = amountOwed;
         this.currencyName = currencyName;
@@ -54,5 +61,13 @@ public class DebtOwedToOthers {
 
     public void setCurrencyName(String currencyName) {
         this.currencyName = currencyName;
+    }
+
+    public List<DebtOthersItem> getDebtOthersItems() {
+        return debtOthersItems;
+    }
+
+    public void setDebtOthersItems(List<DebtOthersItem> debtOthersItems) {
+        this.debtOthersItems = debtOthersItems;
     }
 }

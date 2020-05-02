@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.example.mobilemerchant.R;
-import com.android.example.mobilemerchant.data.DebtOwedItem;
+import com.android.example.mobilemerchant.data.DebtOthersItem;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 import com.android.example.mobilemerchant.data.DebtOwedToYou;
+import com.android.example.mobilemerchant.data.DebtYouItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,19 +39,23 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
 
     @Override
     public void onBindViewHolder(DebtHolder holder, int position) {
+        DebtOwedItemAdapter debtOwedItemAdapter;
         if (toOthers) {
             DebtOwedToOthers current = debtOwedToOthers.get(position);
             holder.name.setText(current.getName());
             holder.amount.setText(current.getAmountOwed() + " " + current.getCurrencyName());
+            debtOwedItemAdapter = new DebtOwedItemAdapter(true);
+            ArrayList<DebtOthersItem> debtOthersItems = (ArrayList<DebtOthersItem>) current.getDebtOthersItems();
+            debtOwedItemAdapter.setDebtOthersItems(debtOthersItems);
         }
         else {
             DebtOwedToYou current = debtOwedToYous.get(position);
             holder.name.setText(current.getName());
             holder.amount.setText(current.getAmountOwed() + " " + current.getCurrencyName());
+            debtOwedItemAdapter = new DebtOwedItemAdapter(false);
+            ArrayList<DebtYouItem> debtYouItems = (ArrayList<DebtYouItem>) current.getDebtYouItems();
+            debtOwedItemAdapter.setDebtYouItems(debtYouItems);
         }
-        ArrayList<DebtOwedItem> debtOwedItems = new ArrayList<>();
-        DebtOwedItemAdapter debtOwedItemAdapter = new DebtOwedItemAdapter();
-        debtOwedItemAdapter.setDebtOwedItems(debtOwedItems);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         holder.recyclerView.setAdapter(debtOwedItemAdapter);
         holder.recyclerView.setVisibility(View.GONE);
