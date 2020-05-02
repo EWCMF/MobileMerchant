@@ -3,17 +3,28 @@ package com.android.example.mobilemerchant.view;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+import java.util.Locale;
 
 import com.android.example.mobilemerchant.R;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
-    Spinner languageSpinner;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +34,37 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_layout);
 
-        languageSpinner = findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.languageChoices,
-                R.layout.support_simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        languageSpinner.setAdapter(adapter);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.languageChoices, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+                if (position == 0) {
+
+                    Toast.makeText(parent.getContext(), "You have selected English", Toast.LENGTH_SHORT).show();
+                    setLocale("en");
+                } else if (position == 1) {
+
+                    Toast.makeText(parent.getContext(), "You have selected Danish", Toast.LENGTH_SHORT).show();
+                    setLocale("da");
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
 
         TextView calculator = findViewById(R.id.calculatorText);
         calculator.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +105,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    public void setLocale(String lang){
+
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
+    }
+
+
+
 
 
 //creating inflatable menu

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mobile Merchant</string>
+    <string name="calculatorTitle">Lommeregner</string>
+    <string name="CurrencyConverterTitle">Valutaomregner</string>
+    <string name="debtOwedToYouTitle">Gæld fra andre</string>
+    <string name="debtOwedToOthersTitle">Gæld til andre</string>
+    <string name="languageTitle">Sprog</string>
+    <string name="currencyTo">til</string>
+    <string name="currencyEditTextHint">Indtast beløb</string>
+    <string name="currencyInputText">Input:</string>
+    <string name="currencyResultText">Resultat:</string>
+    <string name="currencyExchangeRateText">Valuta kurs:</string>
+    <string name="currencyConvertButtonText">Konverter</string>
+    <string name="currencySameCurrencyException">De to valgte valutaer kan ikke være ens.</string>
+    <string name="currencyCurrencyNotSupportedException">En af de valgte valutaer er ikke tilladt</string>
+    <string name="currencyNegativeInputException">Indtastet beløb kan ikke være under 0</string>
+    <string name="currencyInputEmpty">Input er tom</string>
+</resources>
