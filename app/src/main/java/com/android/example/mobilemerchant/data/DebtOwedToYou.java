@@ -66,25 +66,6 @@ public class DebtOwedToYou {
     }
 
     public void setDebtYouItems(List<DebtYouItem> debtYouItems) {
-        if (debtYouItems.size() > 0) {
-            String denominator = debtYouItems.get(0).getCurrency();
-            boolean same = true;
-            for (int i = 0; i < debtYouItems.size(); i++) {
-                if (!debtYouItems.get(i).getCurrency().equals(denominator)) {
-                    same = false;
-                    break;
-                }
-            }
-            if (same) {
-                currencyName = denominator;
-                for (int i = 0; i < debtYouItems.size(); i++) {
-                    amountOwed += debtYouItems.get(i).getValue();
-                }
-            } else {
-                currencyName = "Mixed";
-                amountOwed = 0;
-            }
-        }
         this.debtYouItems = debtYouItems;
     }
 }

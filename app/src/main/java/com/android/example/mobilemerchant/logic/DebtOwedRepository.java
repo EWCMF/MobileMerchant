@@ -9,6 +9,7 @@ import com.android.example.mobilemerchant.data.DebtOthersNamesWithItems;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 import com.android.example.mobilemerchant.data.DebtOwedToYou;
 import com.android.example.mobilemerchant.data.DebtYouItem;
+import com.android.example.mobilemerchant.data.DebtYouNamesWithItems;
 import com.android.example.mobilemerchant.persistence.AppDatabase;
 import com.android.example.mobilemerchant.persistence.DebtOthersItemDao;
 import com.android.example.mobilemerchant.persistence.DebtOwedToOthersDao;
@@ -88,11 +89,19 @@ public class DebtOwedRepository {
         return allDebtYou;
     }
 
-    public List<DebtOwedToOthers> getDebtOthersNamesWithItems() {
-        return debtOwedToOthersDao.getAllDebtOwed();
+    public LiveData<List<DebtOthersNamesWithItems>> getDebtOthersNamesWithItems() {
+        return debtOwedToOthersDao.getDebtOthersNamesWithItems();
     }
 
-    public List<DebtOwedToYou> getDebtYouNamesWithItems() {
-        return debtOwedToYouDao.getAllDebtOwed();
+    public List<DebtOthersNamesWithItems> getDebtOthersNamesWithItemsSimple() {
+        return debtOwedToOthersDao.getDebtOthersNamesWithItemsSimple();
+    }
+
+    public LiveData<List<DebtYouNamesWithItems>> getDebtYouNamesWithItems() {
+        return debtOwedToYouDao.getDebtYouNamesWithItems();
+    }
+
+    public List<DebtYouNamesWithItems> getDebtYouNamesWithItemsSimple() {
+        return debtOwedToYouDao.getDebtYouNamesWithItemsSimple();
     }
 }

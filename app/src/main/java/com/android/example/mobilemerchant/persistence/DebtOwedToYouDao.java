@@ -22,17 +22,6 @@ public abstract class DebtOwedToYouDao {
     @Query("SELECT * FROM DebtOwedToYou")
     public abstract LiveData<List<DebtOwedToYou>> getAll();
 
-    @Query("SELECT * FROM DebtOwedToYou")
-    public List<DebtOwedToYou> getAllDebtOwed() {
-        List<DebtYouNamesWithItems> debtYouNamesWithItems = getDebtYouNamesWithItems();
-        List<DebtOwedToYou> debtOwedToYous = new ArrayList<>(debtYouNamesWithItems.size());
-        for (DebtYouNamesWithItems current : debtYouNamesWithItems) {
-            current.debtOwedToYou.setDebtYouItems(current.debtOwedItems);
-            debtOwedToYous.add(current.debtOwedToYou);
-        }
-        return debtOwedToYous;
-    }
-
     @Query("SELECT * FROM DebtOwedToYou WHERE owedID IN (:userIds)")
     public abstract List<DebtOwedToYou> loadAllByIds(int[] userIds);
 
@@ -53,5 +42,9 @@ public abstract class DebtOwedToYouDao {
 
     @Transaction
     @Query("SELECT * FROM DebtOwedToYou")
-    public abstract List<DebtYouNamesWithItems> getDebtYouNamesWithItems();
+    public abstract LiveData<List<DebtYouNamesWithItems>> getDebtYouNamesWithItems();
+
+    @Transaction
+    @Query("SELECT * FROM DebtOwedToYou")
+    public abstract List<DebtYouNamesWithItems> getDebtYouNamesWithItemsSimple();
 }

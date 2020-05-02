@@ -5,8 +5,10 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.android.example.mobilemerchant.data.DebtOthersNamesWithItems;
 import com.android.example.mobilemerchant.data.DebtOwedToYou;
 import com.android.example.mobilemerchant.data.DebtYouItem;
+import com.android.example.mobilemerchant.data.DebtYouNamesWithItems;
 import com.android.example.mobilemerchant.logic.DebtOwedRepository;
 
 import java.util.List;
@@ -46,7 +48,11 @@ public class DebtOwedYouViewModel extends AndroidViewModel {
         return allDebtYouItems;
     }
 
-    public List<DebtOwedToYou> getAlldebtYouSimple() {
+    public LiveData<List<DebtYouNamesWithItems>> getAllDebtYouLive() {
         return repository.getDebtYouNamesWithItems();
+    }
+
+    public List<DebtYouNamesWithItems> getAllDebtYouSimple() {
+        return repository.getDebtYouNamesWithItemsSimple();
     }
 }

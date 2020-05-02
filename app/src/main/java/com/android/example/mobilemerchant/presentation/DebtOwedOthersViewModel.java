@@ -46,7 +46,11 @@ public class DebtOwedOthersViewModel extends AndroidViewModel {
         return allDebtOthersItems;
     }
 
-    public List<DebtOwedToOthers> getAllDebtOthersSimple() {
+    public LiveData<List<DebtOthersNamesWithItems>> getAllDebtOthersLive() {
         return repository.getDebtOthersNamesWithItems();
+    }
+
+    public List<DebtOthersNamesWithItems> getAllDebtOthersSimple() {
+        return repository.getDebtOthersNamesWithItemsSimple();
     }
 }

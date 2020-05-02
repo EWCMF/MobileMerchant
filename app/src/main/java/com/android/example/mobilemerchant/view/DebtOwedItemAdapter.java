@@ -20,9 +20,13 @@ public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapte
     private List<DebtOthersItem> debtOthersItems = new ArrayList<>();
     private List<DebtYouItem> debtYouItems = new ArrayList<>();
     private boolean toOthers;
+    private int parentIndex;
+    private DebtOwedActivity reference;
 
-    DebtOwedItemAdapter(boolean toOthers) {
+    DebtOwedItemAdapter(boolean toOthers, int parentIndex, DebtOwedActivity reference) {
         this.toOthers = toOthers;
+        this.parentIndex = parentIndex;
+        this.reference = reference;
     }
 
     @NonNull
@@ -78,6 +82,7 @@ public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapte
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             v.setLongClickable(true);
+            reference.setCurrentSelectedName(parentIndex);
             menu.add(this.getAdapterPosition(), v.getId(), 0, "Update amount");
             menu.add(this.getAdapterPosition(), v.getId(), 0, "Rename item");
             menu.add(this.getAdapterPosition(), v.getId(), 0, "Delete item");
