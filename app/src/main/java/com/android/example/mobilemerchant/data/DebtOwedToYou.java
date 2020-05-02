@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class DebtOwedToYou {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int owedID;
 
     @ColumnInfo(name = "name")

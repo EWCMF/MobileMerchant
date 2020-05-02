@@ -19,8 +19,7 @@
         </activity>
         <activity android:name=".view.CalculatorActivity" />
         <activity android:name=".view.CurrencyConverterActivity" />
-        <activity android:name=".view.DebtOwedToYouActivity" />
-        <activity android:name=".view.DebtOwedToOthersActivity" />
+        <activity android:name=".view.DebtOwedActivity" />
     </application>
 
 </manifest>

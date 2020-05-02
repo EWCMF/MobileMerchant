@@ -11,36 +11,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.example.mobilemerchant.R;
-import com.android.example.mobilemerchant.data.DebtOwedToYou;
-import com.android.example.mobilemerchant.persistence.AppDatabase;
-import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 
 public class MainActivity extends AppCompatActivity {
     Spinner languageSpinner;
-    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = AppDatabase.getDatabase(this);
-
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_layout);
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                db.debtOwedToOthersDao().nukeTable();
-                db.debtOwedToYouDao().nukeTable();
-                DebtOwedToOthers testDebtOwedToOthers = new DebtOwedToOthers("Tommy", 500, "DKK");
-                DebtOwedToYou test2 = new DebtOwedToYou("Unlucky", 200, "DKK");
-                db.debtOwedToOthersDao().insertAll(testDebtOwedToOthers);
-                db.debtOwedToYouDao().insertAll(test2);
-            }
-        });
-        thread.start();
 
         languageSpinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.languageChoices,
@@ -70,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         debtToYou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), DebtOwedToYouActivity.class);
+                Intent i = new Intent(getApplicationContext(), DebtOwedActivity.class);
+                i.putExtra("toOthers", false);
                 startActivity(i);
             }
         });
@@ -79,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
         debtToOthers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), DebtOwedToOthersActivity.class);
+                Intent i = new Intent(getApplicationContext(), DebtOwedActivity.class);
+                i.putExtra("toOthers", true);
                 startActivity(i);
             }
         });
