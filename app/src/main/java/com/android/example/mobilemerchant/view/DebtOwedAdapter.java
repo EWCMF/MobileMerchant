@@ -8,13 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.example.mobilemerchant.R;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
+import com.android.example.mobilemerchant.data.DebtOwedToYou;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHolder> {
     private List<DebtOwedToOthers> debtOwedToOthers = new ArrayList<>();
+    private List<DebtOwedToYou> debtOwedToYous = new ArrayList<>();
     private ItemClickListener clickListener;
+    private boolean toOthers;
+
+    DebtOwedAdapter(boolean toOthers) {
+        this.toOthers = toOthers;
+    }
 
     @Override
     public DebtHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -24,22 +31,39 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
 
     @Override
     public void onBindViewHolder(DebtHolder holder, int position) {
-        DebtOwedToOthers current = debtOwedToOthers.get(position);
-        holder.name.setText(current.getName());
-        holder.amount.setText(current.getAmountOwed() + " " + current.getCurrencyName());
+        if (toOthers) {
+            DebtOwedToOthers current = debtOwedToOthers.get(position);
+            holder.name.setText(current.getName());
+            holder.amount.setText(current.getAmountOwed() + " " + current.getCurrencyName());
+        }
+        else {
+            DebtOwedToYou current = debtOwedToYous.get(position);
+            holder.name.setText(current.getName());
+            holder.amount.setText(current.getAmountOwed() + " " + current.getCurrencyName());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return debtOwedToOthers.size();
+        if (toOthers) {
+            return debtOwedToOthers.size();
+        }
+        else {
+            return debtOwedToYous.size();
+        }
     }
 
-    public void setDebtOwedToOthers(List<DebtOwedToOthers> debtOwedToOthers) {
+    void setDebtOwedToOthers(List<DebtOwedToOthers> debtOwedToOthers) {
         this.debtOwedToOthers = debtOwedToOthers;
         notifyDataSetChanged();
     }
 
-    public void setClickListener(ItemClickListener clickListener) {
+    void setDebtOwedToYous(List<DebtOwedToYou> debtOwedToYous) {
+        this.debtOwedToYous = debtOwedToYous;
+        notifyDataSetChanged();
+    }
+
+    void setClickListener(ItemClickListener clickListener) {
         this.clickListener = clickListener;
     }
 
@@ -47,7 +71,7 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
         TextView name;
         TextView amount;
 
-        public DebtHolder(View itemView) {
+        DebtHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.listPersonName);
             amount = itemView.findViewById(R.id.listPersonAmount);

@@ -11,9 +11,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.example.mobilemerchant.R;
-import com.android.example.mobilemerchant.data.DebtOwedToYou;
-import com.android.example.mobilemerchant.persistence.AppDatabase;
-import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 
 public class MainActivity extends AppCompatActivity {
     Spinner languageSpinner;
@@ -54,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         debtToYou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), DebtOwedToYouActivity.class);
+                Intent i = new Intent(getApplicationContext(), DebtOwedActivity.class);
+                i.putExtra("toOthers", false);
                 startActivity(i);
             }
         });
@@ -63,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
         debtToOthers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), DebtOwedToOthersActivity.class);
+                Intent i = new Intent(getApplicationContext(), DebtOwedActivity.class);
+                i.putExtra("toOthers", true);
                 startActivity(i);
             }
         });

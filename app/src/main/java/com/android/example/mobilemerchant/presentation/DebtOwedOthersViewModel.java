@@ -9,14 +9,14 @@ import com.android.example.mobilemerchant.logic.DebtOwedRepository;
 
 import java.util.List;
 
-public class DebtOwedViewModel extends AndroidViewModel {
+public class DebtOwedOthersViewModel extends AndroidViewModel {
     private DebtOwedRepository repository;
-    private LiveData<List<DebtOwedToOthers>> allDebt;
+    private LiveData<List<DebtOwedToOthers>> allDebtOthers;
 
-    public DebtOwedViewModel(Application application) {
+    public DebtOwedOthersViewModel(Application application) {
         super(application);
-        repository = new DebtOwedRepository(application);
-        allDebt = repository.getAllDebt();
+        repository = new DebtOwedRepository(application, true);
+        allDebtOthers = repository.getAllDebtOthers();
     }
 
     public void insert(DebtOwedToOthers debtOwedToOthers) {
@@ -27,7 +27,7 @@ public class DebtOwedViewModel extends AndroidViewModel {
         repository.delete(debtOwedToOthers);
     }
 
-    public LiveData<List<DebtOwedToOthers>> getAllDebt() {
-        return allDebt;
+    public LiveData<List<DebtOwedToOthers>> getAllDebtOthers() {
+        return allDebtOthers;
     }
 }
