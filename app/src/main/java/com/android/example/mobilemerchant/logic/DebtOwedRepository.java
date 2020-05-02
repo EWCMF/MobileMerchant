@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.android.example.mobilemerchant.data.DebtOthersItem;
+import com.android.example.mobilemerchant.data.DebtOthersNamesWithItems;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 import com.android.example.mobilemerchant.data.DebtOwedToYou;
 import com.android.example.mobilemerchant.data.DebtYouItem;
@@ -30,11 +31,6 @@ public class DebtOwedRepository {
             debtOwedToOthersDao = db.debtOwedToOthersDao();
             allDebtOthers = debtOwedToOthersDao.getAll();
             debtOthersItemDao = db.debtOthersItemDao();
-
-            //Test
-            insert(new DebtOwedToOthers(1,"test", 500, "DKK"));
-            insert(new DebtOwedToOthers(2,"Test2", 200, "DKK"));
-            insert(new DebtOthersItem(1, "test", 500, "DKK"));
         }
         else {
             debtOwedToYouDao = db.debtOwedToYouDao();
@@ -54,13 +50,7 @@ public class DebtOwedRepository {
     }
 
     public void insert(DebtOthersItem debtOthersItem) {
-        Thread thread = new Thread(() -> {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            debtOthersItemDao.insertAll(debtOthersItem);});
+        Thread thread = new Thread(() -> debtOthersItemDao.insertAll(debtOthersItem));
         thread.start();
     }
 
@@ -96,5 +86,13 @@ public class DebtOwedRepository {
 
     public LiveData<List<DebtOwedToYou>> getAllDebtYou() {
         return allDebtYou;
+    }
+
+    public List<DebtOwedToOthers> getDebtOthersNamesWithItems() {
+        return debtOwedToOthersDao.getAllDebtOwed();
+    }
+
+    public List<DebtOwedToYou> getDebtYouNamesWithItems() {
+        return debtOwedToYouDao.getAllDebtOwed();
     }
 }

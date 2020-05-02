@@ -45,16 +45,20 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
             holder.name.setText(current.getName());
             holder.amount.setText(current.getAmountOwed() + " " + current.getCurrencyName());
             debtOwedItemAdapter = new DebtOwedItemAdapter(true);
-            ArrayList<DebtOthersItem> debtOthersItems = (ArrayList<DebtOthersItem>) current.getDebtOthersItems();
-            debtOwedItemAdapter.setDebtOthersItems(debtOthersItems);
+            if (current.getDebtOthersItems() != null) {
+                ArrayList<DebtOthersItem> debtOthersItems = (ArrayList<DebtOthersItem>) current.getDebtOthersItems();
+                debtOwedItemAdapter.setDebtOthersItems(debtOthersItems);
+            }
         }
         else {
             DebtOwedToYou current = debtOwedToYous.get(position);
             holder.name.setText(current.getName());
             holder.amount.setText(current.getAmountOwed() + " " + current.getCurrencyName());
             debtOwedItemAdapter = new DebtOwedItemAdapter(false);
-            ArrayList<DebtYouItem> debtYouItems = (ArrayList<DebtYouItem>) current.getDebtYouItems();
-            debtOwedItemAdapter.setDebtYouItems(debtYouItems);
+            if (current.getDebtYouItems() != null) {
+                ArrayList<DebtYouItem> debtYouItems = (ArrayList<DebtYouItem>) current.getDebtYouItems();
+                debtOwedItemAdapter.setDebtYouItems(debtYouItems);
+            }
         }
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         holder.recyclerView.setAdapter(debtOwedItemAdapter);

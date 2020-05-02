@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (appDatabaseInstance == null) {
                     appDatabaseInstance = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "MerchantDB").fallbackToDestructiveMigration().build();
+                            AppDatabase.class, "MerchantDB").fallbackToDestructiveMigration().allowMainThreadQueries().build();
                 }
             }
         }

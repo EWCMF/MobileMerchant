@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.android.example.mobilemerchant.data.DebtOthersItem;
+import com.android.example.mobilemerchant.data.DebtOthersNamesWithItems;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 import com.android.example.mobilemerchant.logic.DebtOwedRepository;
 
@@ -14,7 +15,6 @@ public class DebtOwedOthersViewModel extends AndroidViewModel {
     private DebtOwedRepository repository;
     private LiveData<List<DebtOwedToOthers>> allDebtOthers;
     private LiveData<List<DebtOthersItem>> allDebtOthersItems;
-    private List<DebtOwedToOthers> allDebtOthersTest;
 
     public DebtOwedOthersViewModel(Application application) {
         super(application);
@@ -44,5 +44,9 @@ public class DebtOwedOthersViewModel extends AndroidViewModel {
 
     public LiveData<List<DebtOthersItem>> getAllDebtOthersItems() {
         return allDebtOthersItems;
+    }
+
+    public List<DebtOwedToOthers> getAllDebtOthersSimple() {
+        return repository.getDebtOthersNamesWithItems();
     }
 }

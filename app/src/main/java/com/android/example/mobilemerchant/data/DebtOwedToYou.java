@@ -15,20 +15,18 @@ public class DebtOwedToYou {
     @ColumnInfo(name = "name")
     private String name;
 
-    @ColumnInfo(name = "amount_owed")
+    @Ignore
     private double amountOwed;
 
-    @ColumnInfo(name = "currency")
+    @Ignore
     private String currencyName;
 
     @Ignore
     private List<DebtYouItem> debtYouItems;
 
-    public DebtOwedToYou(int owedID, String name, double amountOwed, String currencyName) {
+    public DebtOwedToYou(int owedID, String name) {
         this.owedID = owedID;
         this.name = name;
-        this.amountOwed = amountOwed;
-        this.currencyName = currencyName;
     }
 
     public int getOwedID() {
@@ -68,6 +66,25 @@ public class DebtOwedToYou {
     }
 
     public void setDebtYouItems(List<DebtYouItem> debtYouItems) {
+        if (debtYouItems.size() > 0) {
+            String denominator = debtYouItems.get(0).getCurrency();
+            boolean same = true;
+            for (int i = 0; i < debtYouItems.size(); i++) {
+                if (!debtYouItems.get(i).getCurrency().equals(denominator)) {
+                    same = false;
+                    break;
+                }
+            }
+            if (same) {
+                currencyName = denominator;
+                for (int i = 0; i < debtYouItems.size(); i++) {
+                    amountOwed += debtYouItems.get(i).getValue();
+                }
+            } else {
+                currencyName = "Mixed";
+                amountOwed = 0;
+            }
+        }
         this.debtYouItems = debtYouItems;
     }
 }

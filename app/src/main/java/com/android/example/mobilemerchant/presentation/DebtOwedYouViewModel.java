@@ -45,4 +45,8 @@ public class DebtOwedYouViewModel extends AndroidViewModel {
     public LiveData<List<DebtYouItem>> getAllDebtYouItems() {
         return allDebtYouItems;
     }
+
+    public List<DebtOwedToYou> getAlldebtYouSimple() {
+        return repository.getDebtYouNamesWithItems();
+    }
 }

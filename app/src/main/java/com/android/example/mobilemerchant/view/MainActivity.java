@@ -11,9 +11,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.example.mobilemerchant.R;
+import com.android.example.mobilemerchant.data.DebtOthersItem;
+import com.android.example.mobilemerchant.data.DebtOwedToOthers;
+import com.android.example.mobilemerchant.logic.DebtOwedRepository;
 
 public class MainActivity extends AppCompatActivity {
     Spinner languageSpinner;
+    DebtOwedRepository debtOwedRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         languageSpinner.setAdapter(adapter);
+
+        debtOwedRepository = new DebtOwedRepository(getApplication(), true);
+        debtOwedRepository.insert(new DebtOwedToOthers(0, "test1"));
+        debtOwedRepository.insert(new DebtOwedToOthers(1, "test2"));
+        debtOwedRepository.insert(new DebtOthersItem(1, "test", 500, "DKK"));
 
         TextView calculator = findViewById(R.id.calculatorText);
         calculator.setOnClickListener(new View.OnClickListener() {

@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.example.mobilemerchant.R;
-import com.android.example.mobilemerchant.data.DebtOthersItem;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 import com.android.example.mobilemerchant.data.DebtOwedToYou;
 import com.android.example.mobilemerchant.presentation.DebtOwedOthersViewModel;
@@ -45,11 +44,13 @@ public class DebtOwedActivity extends ComponentActivity implements ItemClickList
 
         if (toOthers) {
             debtOwedOthersViewModel = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(DebtOwedOthersViewModel.class);
-            debtOwedOthersViewModel.getAllDebtOthers().observe(this, debtOwedToOthers -> debtOwedAdapter.setDebtOwedToOthers(debtOwedToOthers));
+//            debtOwedOthersViewModel.getAllDebtOthers().observe(this, debtOwedToOthers -> debtOwedAdapter.setDebtOwedToOthers(debtOwedToOthers));
+            debtOwedAdapter.setDebtOwedToOthers(debtOwedOthersViewModel.getAllDebtOthersSimple());
         }
         else {
             debtOwedYouViewModel = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(DebtOwedYouViewModel.class);
-            debtOwedYouViewModel.getAllDebtYou().observe(this, debtOwedToYous -> debtOwedAdapter.setDebtOwedToYous(debtOwedToYous));
+//            debtOwedYouViewModel.getAllDebtYou().observe(this, debtOwedToYous -> debtOwedAdapter.setDebtOwedToYous(debtOwedToYous));
+            debtOwedAdapter.setDebtOwedToYous(debtOwedYouViewModel.getAlldebtYouSimple());
         }
     }
 
@@ -70,17 +71,17 @@ public class DebtOwedActivity extends ComponentActivity implements ItemClickList
 
         button.setOnClickListener(v -> {
             dialog.dismiss();
-            addToDB(name.getText().toString(), Double.parseDouble(value.getText().toString()), spinner.getSelectedItem().toString());
+            addToDB(name.getText().toString());
         });
         dialog.show();
     }
 
-    private void addToDB(String name, double value, String currency) {
+    private void addToDB(String name) {
         if (toOthers) {
-            debtOwedOthersViewModel.insert(new DebtOwedToOthers(1, name, value, currency));
+            debtOwedOthersViewModel.insert(new DebtOwedToOthers(1, name));
         }
         else {
-            debtOwedYouViewModel.insert(new DebtOwedToYou(1, name, value, currency));
+            debtOwedYouViewModel.insert(new DebtOwedToYou(1, name));
         }
     }
 
