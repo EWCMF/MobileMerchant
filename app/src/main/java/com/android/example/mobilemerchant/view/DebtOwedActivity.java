@@ -2,13 +2,17 @@ package com.android.example.mobilemerchant.view;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.activity.ComponentActivity;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,8 +38,7 @@ public class DebtOwedActivity extends ComponentActivity implements ItemClickList
         setContentView(R.layout.activity_debtothers);
         toOthers = Objects.requireNonNull(getIntent().getExtras()).getBoolean("toOthers");
         recyclerView = findViewById(R.id.debt_recyclerView);
-        debtOwedAdapter = new DebtOwedAdapter(toOthers);
-        debtOwedAdapter.setClickListener(this);
+        debtOwedAdapter = new DebtOwedAdapter(toOthers, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(debtOwedAdapter);
 
@@ -90,5 +93,16 @@ public class DebtOwedActivity extends ComponentActivity implements ItemClickList
             final DebtOwedToYou debtOwedToYou = Objects.requireNonNull(debtOwedYouViewModel.getAllDebtYou().getValue()).get(position);
             debtOwedYouViewModel.delete(debtOwedToYou);
         }
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.list_constraintLayout) {
+            Log.d("test1", item.getTitle().toString());
+        } else if (item.getItemId() == R.id.sublist_constraintLayout) {
+            Log.d("test2", item.getGroupId() + "");
+            Log.d("test3", item.getTitle().toString());
+        }
+        return super.onContextItemSelected(item);
     }
 }
