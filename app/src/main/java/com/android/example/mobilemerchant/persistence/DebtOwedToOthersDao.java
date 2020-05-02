@@ -6,32 +6,44 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
+import com.android.example.mobilemerchant.data.DebtOthersNamesWithItems;
 import com.android.example.mobilemerchant.data.DebtOwedToOthers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
-public interface DebtOwedToOthersDao {
+public abstract class DebtOwedToOthersDao {
     @Query("SELECT * FROM DebtOwedToOthers")
-    LiveData<List<DebtOwedToOthers>> getAll();
+    public abstract LiveData<List<DebtOwedToOthers>> getAll();
 
     @Query("SELECT * FROM DebtOwedToOthers WHERE owedID IN (:userIds)")
-    List<DebtOwedToOthers> loadAllByIds(int[] userIds);
+    public abstract List<DebtOwedToOthers> loadAllByIds(int[] userIds);
 
     @Query("SELECT * FROM DebtOwedToOthers WHERE name LIKE :name LIMIT 1")
-    DebtOwedToOthers findByName(String name);
+    public abstract DebtOwedToOthers findByName(String name);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(DebtOwedToOthers... debtOwedToOthers);
+    public abstract void insertAll(DebtOwedToOthers... debtOwedToOthers);
 
     @Delete
-    void delete(DebtOwedToOthers debtOwedToOthers);
+    public abstract void delete(DebtOwedToOthers debtOwedToOthers);
 
     @Update
-    void update(DebtOwedToOthers debtOwedToOthers);
+    public abstract void update(DebtOwedToOthers debtOwedToOthers);
 
     @Query("DELETE FROM DebtOwedToOthers")
-    void nukeTable();
+    public abstract void nukeTable();
+
+    @Transaction
+    @Query("SELECT * FROM DebtOwedToOthers")
+    public abstract LiveData<List<DebtOthersNamesWithItems>> getDebtOthersNamesWithItems();
+
+    @Transaction
+    @Query("SELECT * FROM DebtOwedToOthers")
+    public abstract List<DebtOthersNamesWithItems> getDebtOthersNamesWithItemsSimple();
+
 }
