@@ -23,9 +23,6 @@ import com.android.example.mobilemerchant.R;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     public void setLocale(String lang){
 
         Locale myLocale = new Locale(lang);
@@ -105,8 +104,10 @@ public class MainActivity extends AppCompatActivity {
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
 
-        Intent refresh = new Intent(this, MainActivity.class);
-        startActivity(refresh);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
     }
 
 //creating inflatable menu
