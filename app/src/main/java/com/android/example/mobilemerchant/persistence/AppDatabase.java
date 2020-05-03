@@ -6,17 +6,13 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.android.example.mobilemerchant.data.DebtOthersItem;
-import com.android.example.mobilemerchant.data.DebtOwedToOthers;
-import com.android.example.mobilemerchant.data.DebtOwedToYou;
-import com.android.example.mobilemerchant.data.DebtYouItem;
+import com.android.example.mobilemerchant.data.DebtOwedItem;
+import com.android.example.mobilemerchant.data.DebtOwedPerson;
 
-@Database(entities = {DebtOwedToOthers.class, DebtOwedToYou.class, DebtOthersItem.class, DebtYouItem.class}, version = 1)
+@Database(entities = {DebtOwedPerson.class, DebtOwedItem.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract DebtOwedToOthersDao debtOwedToOthersDao();
-    public abstract DebtOwedToYouDao debtOwedToYouDao();
-    public abstract DebtOthersItemDao debtOthersItemDao();
-    public abstract DebtYouItemDao debtYouItemDao();
+    public abstract DebtOwedPersonDao debtOwedPersonDao();
+    public abstract DebtOwedItemDao debtOwedItemDao();
 
     private static volatile AppDatabase appDatabaseInstance;
 

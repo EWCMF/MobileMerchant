@@ -16,19 +16,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.example.mobilemerchant.R;
-import com.android.example.mobilemerchant.data.DebtOthersItem;
-import com.android.example.mobilemerchant.data.DebtOwedToOthers;
-import com.android.example.mobilemerchant.data.DebtOwedToYou;
-import com.android.example.mobilemerchant.data.DebtYouItem;
-import com.android.example.mobilemerchant.presentation.DebtOwedOthersViewModel;
-import com.android.example.mobilemerchant.presentation.DebtOwedYouViewModel;
+import com.android.example.mobilemerchant.data.DebtOwedItem;
+import com.android.example.mobilemerchant.data.DebtOwedPerson;
+import com.android.example.mobilemerchant.presentation.DebtOwedViewModel;
+import com.android.example.mobilemerchant.presentation.DebtOwedViewModelFactory;
 
 import java.util.Objects;
 
-public class DebtOwedActivity extends ComponentActivity implements ItemClickListener {
+public class DebtOwedActivity extends ComponentActivity {
     RecyclerView recyclerView;
-    DebtOwedOthersViewModel debtOwedOthersViewModel;
-    DebtOwedYouViewModel debtOwedYouViewModel;
+    DebtOwedViewModel debtOwedViewModel;
     DebtOwedAdapter debtOwedAdapter;
     private int nameSize;
     private int currentSelectedName;
@@ -44,19 +41,18 @@ public class DebtOwedActivity extends ComponentActivity implements ItemClickList
         debtOwedAdapter = new DebtOwedAdapter(toOthers, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(debtOwedAdapter);
+        debtOwedViewModel = new ViewModelProvider(getViewModelStore(), new DebtOwedViewModelFactory(getApplication(), toOthers)).get(DebtOwedViewModel.class);
 
         if (toOthers) {
-            debtOwedOthersViewModel = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(DebtOwedOthersViewModel.class);
-            debtOwedOthersViewModel.getAllDebtOthersLive().observe(this, debtOthersNamesWithItems -> {
-                debtOwedAdapter.setDebtOwedToOthers(debtOthersNamesWithItems);
-                nameSize = debtOthersNamesWithItems.size();
+            debtOwedViewModel.getAllDebtOwedPersonWithItemsOthers().observe(this, debtOwedPersonWithItems -> {
+                debtOwedAdapter.setDebtOwedList(debtOwedPersonWithItems);
+                nameSize = debtOwedPersonWithItems.size();
             });
         }
         else {
-            debtOwedYouViewModel = new ViewModelProvider(getViewModelStore(), new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(DebtOwedYouViewModel.class);
-            debtOwedYouViewModel.getAllDebtYouLive().observe(this, debtYouNamesWithItems -> {
-                debtOwedAdapter.setDebtOwedToYous(debtYouNamesWithItems);
-                nameSize = debtYouNamesWithItems.size();
+            debtOwedViewModel.getAllDebtOwedPersonWithItemsYou().observe(this, debtOwedPersonWithItems -> {
+                debtOwedAdapter.setDebtOwedList(debtOwedPersonWithItems);
+                nameSize = debtOwedPersonWithItems.size();
             });
         }
     }
@@ -109,31 +105,19 @@ public class DebtOwedActivity extends ComponentActivity implements ItemClickList
 
     private void addToDB(String name) {
         if (toOthers) {
-            debtOwedOthersViewModel.insert(new DebtOwedToOthers(nameSize, name));
+            debtOwedViewModel.insert(new DebtOwedPerson(name, true));
         }
         else {
-            debtOwedYouViewModel.insert(new DebtOwedToYou(nameSize, name));
+            debtOwedViewModel.insert(new DebtOwedPerson(name, false));
         }
     }
 
     private void addItemToNameDB(int ownerID, String name, double amount, String currency) {
         if (toOthers) {
-            debtOwedOthersViewModel.insert(new DebtOthersItem(ownerID, name, amount, currency));
+            debtOwedViewModel.insert(new DebtOwedItem(ownerID, name, amount, currency));
         }
         else {
-            debtOwedYouViewModel.insert(new DebtYouItem(ownerID, name, amount, currency));
-        }
-    }
-
-    @Override
-    public void onClick(View view, int position) {
-        if (toOthers) {
-            final DebtOwedToOthers debtOwedToOthers = Objects.requireNonNull(debtOwedOthersViewModel.getAllDebtOthers().getValue()).get(position);
-            debtOwedOthersViewModel.delete(debtOwedToOthers);
-        }
-        else {
-            final DebtOwedToYou debtOwedToYou = Objects.requireNonNull(debtOwedYouViewModel.getAllDebtYou().getValue()).get(position);
-            debtOwedYouViewModel.delete(debtOwedToYou);
+            debtOwedViewModel.insert(new DebtOwedItem(ownerID, name, amount, currency));
         }
     }
 
@@ -141,27 +125,34 @@ public class DebtOwedActivity extends ComponentActivity implements ItemClickList
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.list_constraintLayout) {
             if (item.getTitle().equals("Add item")) {
-                openCreateItemDialog(item.getGroupId());
+                if (toOthers) {
+                    int ownerID = debtOwedViewModel.getAllDebtOwedPersonWithItemsOthersSimple().get(item.getGroupId()).debtOwedPerson.getOwedID();
+                    openCreateItemDialog(ownerID);
+                }
+                else {
+                    int ownerID = debtOwedViewModel.getAllDebtOwedPersonWithItemsYouSimple().get(item.getGroupId()).debtOwedPerson.getOwedID();
+                    openCreateItemDialog(ownerID);
+                }
             }
             if (item.getTitle().equals("Delete")) {
                 if (toOthers) {
-                    DebtOwedToOthers debtOwedToOthers = debtOwedOthersViewModel.getAllDebtOthersSimple().get(item.getGroupId()).debtOwedToOthers;
-                    debtOwedOthersViewModel.delete(debtOwedToOthers);
+                    DebtOwedPerson debtOwedPerson = debtOwedViewModel.getAllDebtOwedPersonWithItemsOthersSimple().get(item.getGroupId()).debtOwedPerson;
+                    debtOwedViewModel.delete(debtOwedPerson);
                 }
                 else {
-                    DebtOwedToYou debtOwedToYou = debtOwedYouViewModel.getAllDebtYouSimple().get(item.getGroupId()).debtOwedToYou;
-                    debtOwedYouViewModel.delete(debtOwedToYou);
+                    DebtOwedPerson debtOwedPerson = debtOwedViewModel.getAllDebtOwedPersonWithItemsYouSimple().get(item.getGroupId()).debtOwedPerson;
+                    debtOwedViewModel.delete(debtOwedPerson);
                 }
             }
         } else if (item.getItemId() == R.id.sublist_constraintLayout) {
             if (item.getTitle().equals("Delete item")) {
                 if (toOthers) {
-                    DebtOthersItem debtOwedToOthers = debtOwedOthersViewModel.getAllDebtOthersSimple().get(currentSelectedName).debtOwedItems.get(item.getGroupId());
-                    debtOwedOthersViewModel.delete(debtOwedToOthers);
+                    DebtOwedItem debtOwedToOthers = debtOwedViewModel.getAllDebtOwedPersonWithItemsOthersSimple().get(currentSelectedName).debtOwedItems.get(item.getGroupId());
+                    debtOwedViewModel.delete(debtOwedToOthers);
                 }
                 else {
-                    DebtYouItem debtYouItem = debtOwedYouViewModel.getAllDebtYouSimple().get(currentSelectedName).debtOwedItems.get(item.getGroupId());
-                    debtOwedYouViewModel.delete(debtYouItem);
+                    DebtOwedItem debtYouItem = debtOwedViewModel.getAllDebtOwedPersonWithItemsYouSimple().get(currentSelectedName).debtOwedItems.get(item.getGroupId());
+                    debtOwedViewModel.delete(debtYouItem);
                 }
             }
         }

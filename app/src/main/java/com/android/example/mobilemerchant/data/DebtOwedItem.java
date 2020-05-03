@@ -6,15 +6,13 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(
-        foreignKeys = @ForeignKey(
-        entity = DebtOwedToYou.class,
+@Entity(foreignKeys = @ForeignKey(
+        entity = DebtOwedPerson.class,
         parentColumns = "owedID",
         childColumns = "debtOwnerID",
-                onDelete = ForeignKey.CASCADE
-        ), indices = @Index(value = "debtOwnerID")
-)
-public class DebtYouItem {
+        onDelete = ForeignKey.CASCADE
+), indices = @Index(value = "debtOwnerID"))
+public class DebtOwedItem {
     @PrimaryKey(autoGenerate = true)
     private int itemID;
 
@@ -30,7 +28,7 @@ public class DebtYouItem {
     @ColumnInfo(name = "currency")
     private String currency;
 
-    public DebtYouItem(int debtOwnerID, String itemName, double value, String currency) {
+    public DebtOwedItem(int debtOwnerID, String itemName, double value, String currency) {
         this.debtOwnerID = debtOwnerID;
         this.itemName = itemName;
         this.value = value;
