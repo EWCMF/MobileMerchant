@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,14 +21,13 @@ import java.util.List;
 
 public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHolder> {
     private List<DebtOwedPersonWithItems> debtOwedPersonWithItems = new ArrayList<>();
-    private boolean toOthers;
     private DebtOwedActivity reference;
 
-    DebtOwedAdapter(boolean toOthers, DebtOwedActivity reference) {
-        this.toOthers = toOthers;
+    DebtOwedAdapter(DebtOwedActivity reference) {
         this.reference = reference;
     }
 
+    @NonNull
     @Override
     public DebtHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.debt_list_item, parent, false);
@@ -40,7 +40,7 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
         DebtOwedPerson current = debtOwedPersonWithItems.get(position).debtOwedPerson;
         holder.name.setText(current.getName());
         holder.amount.setText("No items");
-        debtOwedItemAdapter = new DebtOwedItemAdapter(true, position, reference);
+        debtOwedItemAdapter = new DebtOwedItemAdapter(position, reference);
         if (debtOwedPersonWithItems.get(position).debtOwedItems != null) {
             ArrayList<DebtOwedItem> debtOwedItems = (ArrayList<DebtOwedItem>) debtOwedPersonWithItems.get(position).debtOwedItems;
             if (debtOwedItems.size() > 0) {
@@ -67,7 +67,7 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
         notifyDataSetChanged();
     }
 
-    class DebtHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+    static class DebtHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         TextView name;
         TextView amount;
         RecyclerView recyclerView;
@@ -78,14 +78,11 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
             amount = itemView.findViewById(R.id.listPersonAmount);
             recyclerView = itemView.findViewById(R.id.list_sublist);
             ConstraintLayout constraintLayout = itemView.findViewById(R.id.list_constraintLayout);
-            constraintLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (recyclerView.getVisibility() == View.GONE) {
-                        recyclerView.setVisibility(View.VISIBLE);
-                    } else {
-                        recyclerView.setVisibility(View.GONE);
-                    }
+            constraintLayout.setOnClickListener(v -> {
+                if (recyclerView.getVisibility() == View.GONE) {
+                    recyclerView.setVisibility(View.VISIBLE);
+                } else {
+                    recyclerView.setVisibility(View.GONE);
                 }
             });
             constraintLayout.setOnCreateContextMenuListener(this);

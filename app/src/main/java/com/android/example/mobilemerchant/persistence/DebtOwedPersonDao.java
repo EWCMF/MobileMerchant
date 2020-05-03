@@ -42,15 +42,14 @@ public interface DebtOwedPersonDao {
     LiveData<List<DebtOwedPersonWithItems>> getDebtOthersPersonWithItems();
 
     @Transaction
-    @Query("SELECT * FROM DebtOwedPerson WHERE to_others = 1")
-    List<DebtOwedPersonWithItems> getDebtOthersPersonWithItemsSimple();
-
-    @Transaction
     @Query("SELECT * FROM DebtOwedPerson WHERE to_others = 0")
     LiveData<List<DebtOwedPersonWithItems>> getDebtYouPersonWithItems();
 
     @Transaction
-    @Query("SELECT * FROM DebtOwedPerson WHERE to_others = 0")
-    List<DebtOwedPersonWithItems> getDebtYouPersonWithItemsSimple();
+    @Query("SELECT * FROM DebtOwedPerson WHERE name LIKE :text AND to_others = 1")
+    LiveData<List<DebtOwedPersonWithItems>> searchNamesOthers(String text);
 
+    @Transaction
+    @Query("SELECT * FROM DebtOwedPerson WHERE name LIKE :text AND to_others = 0")
+    LiveData<List<DebtOwedPersonWithItems>> searchNamesYou(String text);
 }

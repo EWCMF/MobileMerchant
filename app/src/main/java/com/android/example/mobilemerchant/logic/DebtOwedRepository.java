@@ -44,19 +44,19 @@ public class DebtOwedRepository {
         thread.start();
     }
 
+    public LiveData<List<DebtOwedPersonWithItems>> searchOthers(String text) {
+        return debtOwedPersonDao.searchNamesOthers(text);
+    }
+
+    public LiveData<List<DebtOwedPersonWithItems>> searchYou(String text) {
+        return debtOwedPersonDao.searchNamesYou(text);
+    }
+
     public LiveData<List<DebtOwedPersonWithItems>> getDebtOthersPersonWithItems() {
         return debtOwedPersonDao.getDebtOthersPersonWithItems();
     }
 
-    public List<DebtOwedPersonWithItems> getDebtOthersPersonWithItemsSimple() {
-        return debtOwedPersonDao.getDebtOthersPersonWithItemsSimple();
-    }
-
     public LiveData<List<DebtOwedPersonWithItems>> getDebtYouPersonWithItems() {
         return debtOwedPersonDao.getDebtYouPersonWithItems();
-    }
-
-    public List<DebtOwedPersonWithItems> getDebtYouPersonWithItemsSimple() {
-        return debtOwedPersonDao.getDebtYouPersonWithItemsSimple();
     }
 }

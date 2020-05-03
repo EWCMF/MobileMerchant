@@ -17,12 +17,10 @@ import java.util.List;
 
 public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapter.DebtItemHolder> {
     private List<DebtOwedItem> debtOwedItems = new ArrayList<>();
-    private boolean toOthers;
     private int parentIndex;
     private DebtOwedActivity reference;
 
-    DebtOwedItemAdapter(boolean toOthers, int parentIndex, DebtOwedActivity reference) {
-        this.toOthers = toOthers;
+    DebtOwedItemAdapter(int parentIndex, DebtOwedActivity reference) {
         this.parentIndex = parentIndex;
         this.reference = reference;
     }

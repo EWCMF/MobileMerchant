@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,48 +20,59 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.example.mobilemerchant.R;
 import com.android.example.mobilemerchant.data.DebtOwedItem;
 import com.android.example.mobilemerchant.data.DebtOwedPerson;
+import com.android.example.mobilemerchant.data.DebtOwedPersonWithItems;
 import com.android.example.mobilemerchant.presentation.DebtOwedViewModel;
 import com.android.example.mobilemerchant.presentation.DebtOwedViewModelFactory;
 
+import java.util.List;
 import java.util.Objects;
 
 public class DebtOwedActivity extends ComponentActivity {
     RecyclerView recyclerView;
     DebtOwedViewModel debtOwedViewModel;
     DebtOwedAdapter debtOwedAdapter;
-    private int nameSize;
+    EditText searchEditText;
+    List<DebtOwedPersonWithItems> currentData;
     private int currentSelectedName;
-    private int currentSelectedNameItemSize;
     boolean toOthers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_debtothers);
+        setContentView(R.layout.activity_debt_owed);
         toOthers = Objects.requireNonNull(getIntent().getExtras()).getBoolean("toOthers");
+
+        searchEditText = findViewById(R.id.debt_search_editText);
+        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                search();
+                return true;
+            }
+            return false;
+        });
         recyclerView = findViewById(R.id.debt_recyclerView);
-        debtOwedAdapter = new DebtOwedAdapter(toOthers, this);
+        debtOwedAdapter = new DebtOwedAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(debtOwedAdapter);
         debtOwedViewModel = new ViewModelProvider(getViewModelStore(), new DebtOwedViewModelFactory(getApplication(), toOthers)).get(DebtOwedViewModel.class);
-
         if (toOthers) {
             debtOwedViewModel.getAllDebtOwedPersonWithItemsOthers().observe(this, debtOwedPersonWithItems -> {
                 debtOwedAdapter.setDebtOwedList(debtOwedPersonWithItems);
-                nameSize = debtOwedPersonWithItems.size();
+                currentData = debtOwedPersonWithItems;
             });
         }
         else {
             debtOwedViewModel.getAllDebtOwedPersonWithItemsYou().observe(this, debtOwedPersonWithItems -> {
                 debtOwedAdapter.setDebtOwedList(debtOwedPersonWithItems);
-                nameSize = debtOwedPersonWithItems.size();
+                currentData = debtOwedPersonWithItems;
             });
         }
     }
 
     public void openCreateNameDialog(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.create_person_dialog, null);
+        ViewGroup parent = findViewById(R.id.debt_owed_constraint);
+        View dialogView = getLayoutInflater().inflate(R.layout.create_person_dialog, parent, false);
         builder.setView(dialogView);
         EditText name = dialogView.findViewById(R.id.create_person_dialog_name_editText);
         Button button = dialogView.findViewById(R.id.create_person_dialog_button);
@@ -76,7 +89,8 @@ public class DebtOwedActivity extends ComponentActivity {
 
     public void openCreateItemDialog(int ownerID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.create_item_dialog, null);
+        ViewGroup parent = findViewById(R.id.debt_owed_constraint);
+        View dialogView = getLayoutInflater().inflate(R.layout.create_item_dialog, parent, false);
         builder.setView(dialogView);
         EditText name = dialogView.findViewById(R.id.create_item_dialog_name_editText);
         EditText value = dialogView.findViewById(R.id.create_dialog_value_editText);
@@ -99,10 +113,6 @@ public class DebtOwedActivity extends ComponentActivity {
         this.currentSelectedName = currentSelectedName;
     }
 
-    public void setCurrentSelectedNameItemSize(int currentSelectedNameItemSize) {
-        this.currentSelectedNameItemSize = currentSelectedNameItemSize;
-    }
-
     private void addToDB(String name) {
         if (toOthers) {
             debtOwedViewModel.insert(new DebtOwedPerson(name, true));
@@ -121,39 +131,39 @@ public class DebtOwedActivity extends ComponentActivity {
         }
     }
 
+    private void search() {
+        String text = searchEditText.getText().toString();
+        text = "%" + text + "%";
+        if (toOthers) {
+            debtOwedViewModel.searchOthers(text).observe(this, debtOwedPersonWithItems -> {
+                debtOwedAdapter.setDebtOwedList(debtOwedPersonWithItems);
+                currentData = debtOwedPersonWithItems;
+            });
+        }
+        else {
+            debtOwedViewModel.searchYou(text).observe(this, debtOwedPersonWithItems -> {
+                debtOwedAdapter.setDebtOwedList(debtOwedPersonWithItems);
+                currentData = debtOwedPersonWithItems;
+            });
+        }
+    }
+
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.list_constraintLayout) {
             if (item.getTitle().equals("Add item")) {
-                if (toOthers) {
-                    int ownerID = debtOwedViewModel.getAllDebtOwedPersonWithItemsOthersSimple().get(item.getGroupId()).debtOwedPerson.getOwedID();
-                    openCreateItemDialog(ownerID);
-                }
-                else {
-                    int ownerID = debtOwedViewModel.getAllDebtOwedPersonWithItemsYouSimple().get(item.getGroupId()).debtOwedPerson.getOwedID();
-                    openCreateItemDialog(ownerID);
-                }
+                int ownerID = currentData.get(item.getGroupId()).debtOwedPerson.getOwedID();
+                openCreateItemDialog(ownerID);
             }
             if (item.getTitle().equals("Delete")) {
-                if (toOthers) {
-                    DebtOwedPerson debtOwedPerson = debtOwedViewModel.getAllDebtOwedPersonWithItemsOthersSimple().get(item.getGroupId()).debtOwedPerson;
-                    debtOwedViewModel.delete(debtOwedPerson);
-                }
-                else {
-                    DebtOwedPerson debtOwedPerson = debtOwedViewModel.getAllDebtOwedPersonWithItemsYouSimple().get(item.getGroupId()).debtOwedPerson;
-                    debtOwedViewModel.delete(debtOwedPerson);
-                }
+                DebtOwedPerson debtOwedPerson = currentData.get(item.getGroupId()).debtOwedPerson;
+                debtOwedViewModel.delete(debtOwedPerson);
+
             }
         } else if (item.getItemId() == R.id.sublist_constraintLayout) {
             if (item.getTitle().equals("Delete item")) {
-                if (toOthers) {
-                    DebtOwedItem debtOwedToOthers = debtOwedViewModel.getAllDebtOwedPersonWithItemsOthersSimple().get(currentSelectedName).debtOwedItems.get(item.getGroupId());
-                    debtOwedViewModel.delete(debtOwedToOthers);
-                }
-                else {
-                    DebtOwedItem debtYouItem = debtOwedViewModel.getAllDebtOwedPersonWithItemsYouSimple().get(currentSelectedName).debtOwedItems.get(item.getGroupId());
-                    debtOwedViewModel.delete(debtYouItem);
-                }
+                DebtOwedItem debtOwedItem = currentData.get(currentSelectedName).debtOwedItems.get(item.getGroupId());
+                debtOwedViewModel.delete(debtOwedItem);
             }
         }
         return super.onContextItemSelected(item);
