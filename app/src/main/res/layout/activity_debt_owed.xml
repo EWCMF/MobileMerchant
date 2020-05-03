@@ -13,7 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Add new person"
+        android:text="@string/addNewPersonButtonText"
+        android:backgroundTint="@color/title_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +39,7 @@
         android:background="@drawable/rounded_edittext_states"
         android:ems="10"
         android:gravity="center"
-        android:hint="Search"
+        android:hint="@string/searchFieldText"
         android:imeOptions="actionSearch"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +54,7 @@
         android:background="@drawable/rounding_small"
         android:gravity="center"
         android:padding="4dp"
-        android:text="Long click entries for extra options"
+        android:text="@string/extraOptionText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/debt_recyclerView" />

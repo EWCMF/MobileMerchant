@@ -31,4 +31,14 @@
         <item>NOK</item>
         <item>JPY</item>
     </string-array>
+    <!-- Debt owed strings here-->
+    <string name="addNewPersonButtonText">ADD NEW PERSON</string>
+    <string name="extraOptionText">Long click entries for extra options</string>
+    <string name="searchFieldText">Search</string>
+    <!-- Create item & person dialog strings here-->
+    <string name="valueTextHint">Value</string>
+    <string name="nameTextHint">Name</string>
+    <string name="confirmButtonText">CONFIRM</string>
+
+
 </resources>

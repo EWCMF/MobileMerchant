@@ -16,4 +16,10 @@
     <string name="currencyCurrencyNotSupportedException">En af de valgte valutaer er ikke tilladt</string>
     <string name="currencyNegativeInputException">Indtastet beløb kan ikke være under 0</string>
     <string name="currencyInputEmpty">Input er tom</string>
+    <string name="addNewPersonButtonText">TILFØJ NY PERSON</string>
+    <string name="extraOptionText">Hold inde på entries for ekstra funktioner</string>
+    <string name="searchFieldText">Søg</string>
+    <string name="valueTextHint">Beløb</string>
+    <string name="nameTextHint">Navn</string>
+    <string name="confirmButtonText">Bekræft</string>
 </resources>
