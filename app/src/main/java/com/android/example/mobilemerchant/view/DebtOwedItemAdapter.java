@@ -63,8 +63,7 @@ public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapte
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             v.setLongClickable(true);
             reference.setCurrentSelectedName(parentIndex);
-            menu.add(this.getAdapterPosition(), v.getId(), 0, "Update amount");
-            menu.add(this.getAdapterPosition(), v.getId(), 0, "Rename item");
+            menu.add(this.getAdapterPosition(), v.getId(), 0, "Update item");
             menu.add(this.getAdapterPosition(), v.getId(), 0, "Delete item");
         }
     }

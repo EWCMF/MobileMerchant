@@ -34,6 +34,16 @@ public class DebtOwedRepository {
         thread.start();
     }
 
+    public void update(DebtOwedPerson debtOwedPerson) {
+        Thread thread = new Thread(() -> debtOwedPersonDao.update(debtOwedPerson));
+        thread.start();
+    }
+
+    public void update(DebtOwedItem debtOwedItem) {
+        Thread thread = new Thread(() -> debtOwedItemDao.update(debtOwedItem));
+        thread.start();
+    }
+
     public void delete(DebtOwedPerson debtOwedPerson) {
         Thread thread = new Thread(() -> debtOwedPersonDao.delete(debtOwedPerson));
         thread.start();

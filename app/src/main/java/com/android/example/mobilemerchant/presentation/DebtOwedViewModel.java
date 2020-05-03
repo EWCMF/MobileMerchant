@@ -37,6 +37,14 @@ public class DebtOwedViewModel extends AndroidViewModel {
         repository.insert(debtOwedItem);
     }
 
+    public void update(DebtOwedPerson debtOwedPerson) {
+        repository.update(debtOwedPerson);
+    }
+
+    public void update(DebtOwedItem debtOwedItem) {
+        repository.update(debtOwedItem);
+    }
+
     public void delete(DebtOwedPerson debtOwedPerson) {
         repository.delete(debtOwedPerson);
     }
