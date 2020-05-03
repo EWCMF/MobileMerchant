@@ -49,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(parent.getContext(), "You have selected English", Toast.LENGTH_SHORT).show();
                 } else if (position == 2) {
                     setLocale("da");
-                    Toast.makeText(parent.getContext(), "You have selected Danish", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(parent.getContext(), "Du har valgt dansk", Toast.LENGTH_SHORT).show();
+                } else if (position == 3) {
+                    setLocale("iw");
+                    Toast.makeText(parent.getContext(), "בחרת עברית", Toast.LENGTH_SHORT).show();
                 }
 
 
