@@ -45,15 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
 
                 if (position == 0) {
-
-                    Toast.makeText(parent.getContext(), "You have selected English", Toast.LENGTH_SHORT).show();
                     setLocale("en");
+                    Toast.makeText(parent.getContext(), "You have selected English", Toast.LENGTH_SHORT).show();
                 } else if (position == 1) {
-
-                    Toast.makeText(parent.getContext(), "You have selected Danish", Toast.LENGTH_SHORT).show();
                     setLocale("da");
-
+                    Toast.makeText(parent.getContext(), "You have selected Danish", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
 
             @Override
@@ -114,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
+
         Intent refresh = new Intent(this, MainActivity.class);
         startActivity(refresh);
     }
