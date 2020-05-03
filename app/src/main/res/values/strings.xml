@@ -6,6 +6,7 @@
     <string name="debtOwedToOthersTitle">Debt Owed To Others</string>
     <string name="languageTitle">Language</string>
     <string-array name="languageChoices">
+        <item>Default</item>
         <item>English</item>
         <item>Danish</item>
         <item>Hebrew</item>
