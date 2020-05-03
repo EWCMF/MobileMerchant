@@ -1,6 +1,5 @@
 package com.android.example.mobilemerchant.view;
 
-import android.app.Activity;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,19 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.example.mobilemerchant.R;
-import com.android.example.mobilemerchant.data.DebtOthersItem;
-import com.android.example.mobilemerchant.data.DebtOthersNamesWithItems;
-import com.android.example.mobilemerchant.data.DebtOwedToOthers;
-import com.android.example.mobilemerchant.data.DebtOwedToYou;
-import com.android.example.mobilemerchant.data.DebtYouItem;
-import com.android.example.mobilemerchant.data.DebtYouNamesWithItems;
+import com.android.example.mobilemerchant.data.DebtOwedItem;
+import com.android.example.mobilemerchant.data.DebtOwedPersonWithItems;
+import com.android.example.mobilemerchant.data.DebtOwedPerson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHolder> {
-    private List<DebtOthersNamesWithItems> debtOthersNamesWithItems = new ArrayList<>();
-    private List<DebtYouNamesWithItems> debtYouNamesWithItems = new ArrayList<>();
+    private List<DebtOwedPersonWithItems> debtOwedPersonWithItems = new ArrayList<>();
     private boolean toOthers;
     private DebtOwedActivity reference;
 
@@ -42,39 +37,20 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
     @Override
     public void onBindViewHolder(DebtHolder holder, int position) {
         DebtOwedItemAdapter debtOwedItemAdapter;
-        if (toOthers) {
-            DebtOwedToOthers current = debtOthersNamesWithItems.get(position).debtOwedToOthers;
-            holder.name.setText(current.getName());
-            holder.amount.setText("No items");
-            debtOwedItemAdapter = new DebtOwedItemAdapter(true, position, reference);
-            if (debtOthersNamesWithItems.get(position).debtOwedItems != null) {
-                ArrayList<DebtOthersItem> debtOthersItems = (ArrayList<DebtOthersItem>) debtOthersNamesWithItems.get(position).debtOwedItems;
-                if (debtOthersItems.size() > 0) {
-                    double total = 0;
-                    for (int i = 0; i < debtOthersItems.size(); i++) {
-                        total += debtOthersItems.get(i).getValue();
-                    }
-                    holder.amount.setText(total + " " + debtOthersItems.get(0).getCurrency());
+        DebtOwedPerson current = debtOwedPersonWithItems.get(position).debtOwedPerson;
+        holder.name.setText(current.getName());
+        holder.amount.setText("No items");
+        debtOwedItemAdapter = new DebtOwedItemAdapter(true, position, reference);
+        if (debtOwedPersonWithItems.get(position).debtOwedItems != null) {
+            ArrayList<DebtOwedItem> debtOwedItems = (ArrayList<DebtOwedItem>) debtOwedPersonWithItems.get(position).debtOwedItems;
+            if (debtOwedItems.size() > 0) {
+                double total = 0;
+                for (int i = 0; i < debtOwedItems.size(); i++) {
+                    total += debtOwedItems.get(i).getValue();
                 }
-                debtOwedItemAdapter.setDebtOthersItems(debtOthersItems);
+                holder.amount.setText(total + " " + debtOwedItems.get(0).getCurrency());
             }
-        }
-        else {
-            DebtOwedToYou current = debtYouNamesWithItems.get(position).debtOwedToYou;
-            holder.name.setText(current.getName());
-            holder.amount.setText("No items");
-            debtOwedItemAdapter = new DebtOwedItemAdapter(false, position, reference);
-            if (debtYouNamesWithItems.get(position).debtOwedItems != null) {
-                ArrayList<DebtYouItem> debtYouItems = (ArrayList<DebtYouItem>) debtYouNamesWithItems.get(position).debtOwedItems;
-                if (debtYouItems.size() > 0) {
-                    double total = 0;
-                    for (int i = 0; i < debtYouItems.size(); i++) {
-                        total += debtYouItems.get(i).getValue();
-                    }
-                    holder.amount.setText(total + " " + debtYouItems.get(0).getCurrency());
-                }
-                debtOwedItemAdapter.setDebtYouItems(debtYouItems);
-            }
+            debtOwedItemAdapter.setDebtOwedItems(debtOwedItems);
         }
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(reference));
         holder.recyclerView.setAdapter(debtOwedItemAdapter);
@@ -83,21 +59,11 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
 
     @Override
     public int getItemCount() {
-        if (toOthers) {
-            return debtOthersNamesWithItems.size();
-        }
-        else {
-            return debtYouNamesWithItems.size();
-        }
+        return debtOwedPersonWithItems.size();
     }
 
-    void setDebtOwedToOthers(List<DebtOthersNamesWithItems> debtOthersNamesWithItems) {
-        this.debtOthersNamesWithItems = debtOthersNamesWithItems;
-        notifyDataSetChanged();
-    }
-
-    void setDebtOwedToYous(List<DebtYouNamesWithItems> debtYouNamesWithItems) {
-        this.debtYouNamesWithItems = debtYouNamesWithItems;
+    void setDebtOwedList(List<DebtOwedPersonWithItems> debtOwedPersonWithItems) {
+        this.debtOwedPersonWithItems = debtOwedPersonWithItems;
         notifyDataSetChanged();
     }
 
@@ -117,8 +83,7 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
                 public void onClick(View v) {
                     if (recyclerView.getVisibility() == View.GONE) {
                         recyclerView.setVisibility(View.VISIBLE);
-                    }
-                    else {
+                    } else {
                         recyclerView.setVisibility(View.GONE);
                     }
                 }
@@ -128,10 +93,10 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                v.setLongClickable(true);
-                menu.add(this.getAdapterPosition(), v.getId(), 0, "Add item");
-                menu.add(this.getAdapterPosition(), v.getId(), 0, "Rename");
-                menu.add(this.getAdapterPosition(), v.getId(), 0, "Delete");
+            v.setLongClickable(true);
+            menu.add(this.getAdapterPosition(), v.getId(), 0, "Add item");
+            menu.add(this.getAdapterPosition(), v.getId(), 0, "Rename");
+            menu.add(this.getAdapterPosition(), v.getId(), 0, "Delete");
         }
     }
 }

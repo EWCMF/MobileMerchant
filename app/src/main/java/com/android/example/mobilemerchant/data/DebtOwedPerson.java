@@ -8,12 +8,15 @@ import androidx.room.PrimaryKey;
 import java.util.List;
 
 @Entity
-public class DebtOwedToOthers {
-    @PrimaryKey
+public class DebtOwedPerson {
+    @PrimaryKey(autoGenerate = true)
     private int owedID;
 
     @ColumnInfo(name = "name")
     private String name;
+
+    @ColumnInfo(name = "to_others")
+    private boolean toOthers;
 
     @Ignore
     private double amountOwed;
@@ -22,11 +25,11 @@ public class DebtOwedToOthers {
     private String currencyName;
 
     @Ignore
-    private List<DebtOthersItem> debtOthersItems;
+    private List<DebtOwedItem> debtOwedItems;
 
-    public DebtOwedToOthers(int owedID, String name) {
-        this.owedID = owedID;
+    public DebtOwedPerson(String name, boolean toOthers) {
         this.name = name;
+        this.toOthers = toOthers;
     }
 
     public int getOwedID() {
@@ -61,11 +64,19 @@ public class DebtOwedToOthers {
         this.currencyName = currencyName;
     }
 
-    public List<DebtOthersItem> getDebtOthersItems() {
-        return debtOthersItems;
+    public List<DebtOwedItem> getDebtOwedItems() {
+        return debtOwedItems;
     }
 
-    public void setDebtOthersItems(List<DebtOthersItem> debtOthersItems) {
-        this.debtOthersItems = debtOthersItems;
+    public void setDebtOwedItems(List<DebtOwedItem> debtOwedItems) {
+        this.debtOwedItems = debtOwedItems;
+    }
+
+    public boolean isToOthers() {
+        return toOthers;
+    }
+
+    public void setToOthers(boolean toOthers) {
+        this.toOthers = toOthers;
     }
 }
