@@ -5,8 +5,6 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.util.List;
-
 @Entity
 public class DebtOwedPerson {
     @PrimaryKey(autoGenerate = true)
@@ -23,9 +21,6 @@ public class DebtOwedPerson {
 
     @Ignore
     private String currencyName;
-
-    @Ignore
-    private List<DebtOwedItem> debtOwedItems;
 
     public DebtOwedPerson(String name, boolean toOthers) {
         this.name = name;
@@ -62,14 +57,6 @@ public class DebtOwedPerson {
 
     public void setCurrencyName(String currencyName) {
         this.currencyName = currencyName;
-    }
-
-    public List<DebtOwedItem> getDebtOwedItems() {
-        return debtOwedItems;
-    }
-
-    public void setDebtOwedItems(List<DebtOwedItem> debtOwedItems) {
-        this.debtOwedItems = debtOwedItems;
     }
 
     public boolean isToOthers() {

@@ -16,9 +16,8 @@ import java.util.List;
 public class DebtOwedRepository {
     private DebtOwedPersonDao debtOwedPersonDao;
     private DebtOwedItemDao debtOwedItemDao;
-    private LiveData<List<DebtOwedPerson>> allDebt;
 
-    public DebtOwedRepository(Application application, boolean toOthers) {
+    public DebtOwedRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         debtOwedPersonDao = db.debtOwedPersonDao();
         debtOwedItemDao = db.debtOwedItemDao();

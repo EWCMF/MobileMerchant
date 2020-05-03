@@ -25,7 +25,6 @@ import com.android.example.mobilemerchant.data.DebtOwedPersonWithItems;
 import com.android.example.mobilemerchant.presentation.DebtOwedViewModel;
 import com.android.example.mobilemerchant.presentation.DebtOwedViewModelFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

@@ -13,14 +13,12 @@ import java.util.List;
 
 public class DebtOwedViewModel extends AndroidViewModel {
     private DebtOwedRepository repository;
-    private LiveData<List<DebtOwedPerson>> allDebtOthers;
     private LiveData<List<DebtOwedPersonWithItems>> allDebtOwedPersonWithItemsOther;
     private LiveData<List<DebtOwedPersonWithItems>> allDebtOwedPersonWithItemsYou;
-    private LiveData<List<DebtOwedItem>> allDebtOthersItems;
 
     DebtOwedViewModel(Application application, boolean toOthers) {
         super(application);
-        repository = new DebtOwedRepository(application, true);
+        repository = new DebtOwedRepository(application);
         if (toOthers) {
             allDebtOwedPersonWithItemsOther = repository.getDebtOthersPersonWithItems();
         }
@@ -59,10 +57,6 @@ public class DebtOwedViewModel extends AndroidViewModel {
 
     public LiveData<List<DebtOwedPersonWithItems>> searchYou(String text) {
         return repository.searchYou(text);
-    }
-
-    public LiveData<List<DebtOwedPerson>> getAllDebtOthers() {
-        return allDebtOthers;
     }
 
     public LiveData<List<DebtOwedPersonWithItems>> getAllDebtOwedPersonWithItemsOthers() {
