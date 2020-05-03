@@ -17,12 +17,10 @@ import java.util.List;
 
 public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapter.DebtItemHolder> {
     private List<DebtOwedItem> debtOwedItems = new ArrayList<>();
-    private boolean toOthers;
     private int parentIndex;
     private DebtOwedActivity reference;
 
-    DebtOwedItemAdapter(boolean toOthers, int parentIndex, DebtOwedActivity reference) {
-        this.toOthers = toOthers;
+    DebtOwedItemAdapter(int parentIndex, DebtOwedActivity reference) {
         this.parentIndex = parentIndex;
         this.reference = reference;
     }
@@ -65,8 +63,7 @@ public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapte
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             v.setLongClickable(true);
             reference.setCurrentSelectedName(parentIndex);
-            menu.add(this.getAdapterPosition(), v.getId(), 0, "Update amount");
-            menu.add(this.getAdapterPosition(), v.getId(), 0, "Rename item");
+            menu.add(this.getAdapterPosition(), v.getId(), 0, "Update item");
             menu.add(this.getAdapterPosition(), v.getId(), 0, "Delete item");
         }
     }

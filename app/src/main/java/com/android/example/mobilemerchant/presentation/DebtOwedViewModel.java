@@ -18,7 +18,7 @@ public class DebtOwedViewModel extends AndroidViewModel {
     private LiveData<List<DebtOwedPersonWithItems>> allDebtOwedPersonWithItemsYou;
     private LiveData<List<DebtOwedItem>> allDebtOthersItems;
 
-    public DebtOwedViewModel(Application application, boolean toOthers) {
+    DebtOwedViewModel(Application application, boolean toOthers) {
         super(application);
         repository = new DebtOwedRepository(application, true);
         if (toOthers) {
@@ -37,12 +37,28 @@ public class DebtOwedViewModel extends AndroidViewModel {
         repository.insert(debtOwedItem);
     }
 
+    public void update(DebtOwedPerson debtOwedPerson) {
+        repository.update(debtOwedPerson);
+    }
+
+    public void update(DebtOwedItem debtOwedItem) {
+        repository.update(debtOwedItem);
+    }
+
     public void delete(DebtOwedPerson debtOwedPerson) {
         repository.delete(debtOwedPerson);
     }
 
     public void delete(DebtOwedItem debtOwedItem) {
         repository.delete(debtOwedItem);
+    }
+
+    public LiveData<List<DebtOwedPersonWithItems>> searchOthers(String text) {
+        return repository.searchOthers(text);
+    }
+
+    public LiveData<List<DebtOwedPersonWithItems>> searchYou(String text) {
+        return repository.searchYou(text);
     }
 
     public LiveData<List<DebtOwedPerson>> getAllDebtOthers() {
@@ -53,15 +69,7 @@ public class DebtOwedViewModel extends AndroidViewModel {
         return allDebtOwedPersonWithItemsOther;
     }
 
-    public List<DebtOwedPersonWithItems> getAllDebtOwedPersonWithItemsOthersSimple() {
-        return repository.getDebtOthersPersonWithItemsSimple();
-    }
-
     public LiveData<List<DebtOwedPersonWithItems>> getAllDebtOwedPersonWithItemsYou() {
         return allDebtOwedPersonWithItemsYou;
-    }
-
-    public List<DebtOwedPersonWithItems> getAllDebtOwedPersonWithItemsYouSimple() {
-        return repository.getDebtYouPersonWithItemsSimple();
     }
 }

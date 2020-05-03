@@ -34,6 +34,16 @@ public class DebtOwedRepository {
         thread.start();
     }
 
+    public void update(DebtOwedPerson debtOwedPerson) {
+        Thread thread = new Thread(() -> debtOwedPersonDao.update(debtOwedPerson));
+        thread.start();
+    }
+
+    public void update(DebtOwedItem debtOwedItem) {
+        Thread thread = new Thread(() -> debtOwedItemDao.update(debtOwedItem));
+        thread.start();
+    }
+
     public void delete(DebtOwedPerson debtOwedPerson) {
         Thread thread = new Thread(() -> debtOwedPersonDao.delete(debtOwedPerson));
         thread.start();
@@ -44,19 +54,19 @@ public class DebtOwedRepository {
         thread.start();
     }
 
+    public LiveData<List<DebtOwedPersonWithItems>> searchOthers(String text) {
+        return debtOwedPersonDao.searchNamesOthers(text);
+    }
+
+    public LiveData<List<DebtOwedPersonWithItems>> searchYou(String text) {
+        return debtOwedPersonDao.searchNamesYou(text);
+    }
+
     public LiveData<List<DebtOwedPersonWithItems>> getDebtOthersPersonWithItems() {
         return debtOwedPersonDao.getDebtOthersPersonWithItems();
     }
 
-    public List<DebtOwedPersonWithItems> getDebtOthersPersonWithItemsSimple() {
-        return debtOwedPersonDao.getDebtOthersPersonWithItemsSimple();
-    }
-
     public LiveData<List<DebtOwedPersonWithItems>> getDebtYouPersonWithItems() {
         return debtOwedPersonDao.getDebtYouPersonWithItems();
-    }
-
-    public List<DebtOwedPersonWithItems> getDebtYouPersonWithItemsSimple() {
-        return debtOwedPersonDao.getDebtYouPersonWithItemsSimple();
     }
 }
