@@ -11,15 +11,16 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Locale;
 
+
 import com.android.example.mobilemerchant.R;
 
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.languageChoices, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
+        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 
-                if (position == 0) {
+                if (position == 1) {
                     setLocale("en");
                     Toast.makeText(parent.getContext(), "You have selected English", Toast.LENGTH_SHORT).show();
-                } else if (position == 1) {
+                } else if (position == 2) {
                     setLocale("da");
                     Toast.makeText(parent.getContext(), "You have selected Danish", Toast.LENGTH_SHORT).show();
                 }
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            @Override
+
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
