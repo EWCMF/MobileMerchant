@@ -4,6 +4,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,15 +41,30 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
         DebtOwedPerson current = debtOwedPersonWithItems.get(position).debtOwedPerson;
         holder.name.setText(current.getName());
         holder.amount.setText("No items");
+        holder.arrow.setVisibility(View.INVISIBLE);
         debtOwedItemAdapter = new DebtOwedItemAdapter(position, reference);
         if (debtOwedPersonWithItems.get(position).debtOwedItems != null) {
             ArrayList<DebtOwedItem> debtOwedItems = (ArrayList<DebtOwedItem>) debtOwedPersonWithItems.get(position).debtOwedItems;
             if (debtOwedItems.size() > 0) {
-                double total = 0;
+                holder.arrow.setVisibility(View.VISIBLE);
+                String check = debtOwedItems.get(0).getCurrency();
+                boolean same = true;
                 for (int i = 0; i < debtOwedItems.size(); i++) {
-                    total += debtOwedItems.get(i).getValue();
+                    if (!check.equals(debtOwedItems.get(i).getCurrency())) {
+                        same = false;
+                        break;
+                    }
                 }
-                holder.amount.setText(total + " " + debtOwedItems.get(0).getCurrency());
+                if (same) {
+                    double total = 0;
+                    for (int i = 0; i < debtOwedItems.size(); i++) {
+                        total += debtOwedItems.get(i).getValue();
+                    }
+                    holder.amount.setText(total + " " + debtOwedItems.get(0).getCurrency());
+                }
+                else {
+                    holder.amount.setText("Mixed currencies");
+                }
             }
             debtOwedItemAdapter.setDebtOwedItems(debtOwedItems);
         }
@@ -70,12 +86,14 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
     static class DebtHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         TextView name;
         TextView amount;
+        ImageView arrow;
         RecyclerView recyclerView;
 
         DebtHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.listPersonName);
             amount = itemView.findViewById(R.id.listPersonAmount);
+            arrow = itemView.findViewById(R.id.debt_list_arrow);
             recyclerView = itemView.findViewById(R.id.list_sublist);
             ConstraintLayout constraintLayout = itemView.findViewById(R.id.list_constraintLayout);
             constraintLayout.setOnClickListener(v -> {

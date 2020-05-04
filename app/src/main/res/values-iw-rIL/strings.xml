@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mobile Merchant</string>
+    <string name="calculatorTitle">מחשבון</string>
+    <string name="CurrencyConverterTitle">ממיר מטבע</string>
+    <string name="debtOwedToYouTitle">חוב שחייב לך</string>
+    <string name="debtOwedToOthersTitle">חוב המגיע לאחרים</string>
+    <string name="languageTitle">שפה</string>
+    <string name="currencyTo">ל</string>
+    <string name="currencyEditTextHint">ערך כאן</string>
+    <string name="currencyInputText">קלט:</string>
+    <string name="currencyResultText">תוצאה:</string>
+    <string name="currencyExchangeRateText">שער חליפין:</string>
+    <string name="currencyConvertButtonText">להמיר</string>
+    <string name="currencySameCurrencyException">שני המטבעות שנבחרו אינם יכולים להיות זהים.</string>
+    <string name="currencyCurrencyNotSupportedException">אחד מהמטבעות שנבחרו אסור כרגע.</string>
+    <string name="currencyNegativeInputException">ערך הקלט לא יכול להיות מתחת ל- 0.</string>
+    <string name="currencyInputEmpty">הקלט ריק</string>
+</resources>

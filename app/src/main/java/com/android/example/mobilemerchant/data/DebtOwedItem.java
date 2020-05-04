@@ -70,8 +70,4 @@ public class DebtOwedItem {
     public int getDebtOwnerID() {
         return debtOwnerID;
     }
-
-    public void setDebtOwnerID(int debtOwnerID) {
-        this.debtOwnerID = debtOwnerID;
-    }
 }

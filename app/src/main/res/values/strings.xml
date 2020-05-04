@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Mobile Merchant</string>
     <string name="calculatorTitle">Calculator</string>
-    <string name="CurrencyConverterTitle">Currency Converter</string>
     <string name="debtOwedToYouTitle">Debt Owed To You</string>
     <string name="debtOwedToOthersTitle">Debt Owed To Others</string>
+    <string name="CurrencyConverterTitle">Currency Converter</string>
     <string name="languageTitle">Language</string>
     <string-array name="languageChoices">
         <item>Default</item>
@@ -39,6 +39,5 @@
     <string name="valueTextHint">Value</string>
     <string name="nameTextHint">Name</string>
     <string name="confirmButtonText">CONFIRM</string>
-
 
 </resources>
