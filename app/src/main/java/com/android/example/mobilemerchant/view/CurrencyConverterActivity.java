@@ -38,7 +38,7 @@ public class CurrencyConverterActivity extends Activity {
         currencyFromSpinner = findViewById(R.id.currencyFromSpinner);
         currencyToSpinner = findViewById(R.id.currencyToSpinner);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.currenciesAvailable,
-                R.layout.support_simple_spinner_dropdown_item);
+                R.layout.custom_spinner);
         currencyFromSpinner.setAdapter(adapter1);
         currencyToSpinner.setAdapter(adapter1);
 

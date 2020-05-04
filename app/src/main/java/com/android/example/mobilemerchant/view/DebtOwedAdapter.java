@@ -1,5 +1,6 @@
 package com.android.example.mobilemerchant.view;
 
+import android.annotation.SuppressLint;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.android.example.mobilemerchant.data.DebtOwedPerson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHolder> {
     private List<DebtOwedPersonWithItems> debtOwedPersonWithItems = new ArrayList<>();
@@ -35,12 +37,13 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
         return new DebtHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(DebtHolder holder, int position) {
         DebtOwedItemAdapter debtOwedItemAdapter;
         DebtOwedPerson current = debtOwedPersonWithItems.get(position).debtOwedPerson;
         holder.name.setText(current.getName());
-        holder.amount.setText("No items");
+        holder.amount.setText(R.string.debtOwedNoItems);
         holder.arrow.setVisibility(View.INVISIBLE);
         debtOwedItemAdapter = new DebtOwedItemAdapter(position, reference);
         if (debtOwedPersonWithItems.get(position).debtOwedItems != null) {
@@ -60,10 +63,11 @@ public class DebtOwedAdapter extends RecyclerView.Adapter<DebtOwedAdapter.DebtHo
                     for (int i = 0; i < debtOwedItems.size(); i++) {
                         total += debtOwedItems.get(i).getValue();
                     }
-                    holder.amount.setText(total + " " + debtOwedItems.get(0).getCurrency());
+                    String formatted = String.format(Locale.getDefault(),"%.2f", total);
+                    holder.amount.setText(formatted + " " + debtOwedItems.get(0).getCurrency());
                 }
                 else {
-                    holder.amount.setText("Mixed currencies");
+                    holder.amount.setText(R.string.debtOwedMixedCurrencies);
                 }
             }
             debtOwedItemAdapter.setDebtOwedItems(debtOwedItems);

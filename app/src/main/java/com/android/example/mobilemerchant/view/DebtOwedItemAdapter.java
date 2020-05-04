@@ -1,5 +1,6 @@
 package com.android.example.mobilemerchant.view;
 
+import android.annotation.SuppressLint;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.android.example.mobilemerchant.data.DebtOwedItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapter.DebtItemHolder> {
     private List<DebtOwedItem> debtOwedItems = new ArrayList<>();
@@ -32,10 +34,12 @@ public class DebtOwedItemAdapter extends RecyclerView.Adapter<DebtOwedItemAdapte
         return new DebtItemHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull DebtItemHolder holder, int position) {
         holder.name.setText(debtOwedItems.get(position).getItemName());
-        holder.amount.setText(debtOwedItems.get(position).getValue() + " " + debtOwedItems.get(position).getCurrency());
+        String formatted = String.format(Locale.getDefault(),"%.2f", debtOwedItems.get(position).getValue());
+        holder.amount.setText(formatted + " " + debtOwedItems.get(position).getCurrency());
     }
 
     @Override

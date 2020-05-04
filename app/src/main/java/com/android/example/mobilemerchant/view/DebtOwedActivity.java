@@ -120,7 +120,7 @@ public class DebtOwedActivity extends ComponentActivity {
         EditText value = dialogView.findViewById(R.id.create_dialog_value_editText);
         Spinner spinner = dialogView.findViewById(R.id.create_dialog_spinner);
         Button button = dialogView.findViewById(R.id.create_dialog_button);
-        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.currenciesAvailable, R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.currenciesAvailable, R.layout.custom_spinner);
         spinner.setAdapter(arrayAdapter);
 
         AlertDialog dialog = builder.create();
