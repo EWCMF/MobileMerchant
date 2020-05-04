@@ -1,19 +1,16 @@
 package com.android.example.mobilemerchant.view;
 
-import android.app.Activity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.example.mobilemerchant.R;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.ast.Scope;
+
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -30,7 +27,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.action_bar_layout);
-
 
 
         n0 = findViewById(R.id.btnNum0);
@@ -241,8 +237,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 }
