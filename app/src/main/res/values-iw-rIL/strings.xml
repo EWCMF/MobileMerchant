@@ -16,4 +16,14 @@
     <string name="currencyCurrencyNotSupportedException">אחד מהמטבעות שנבחרו אסור כרגע.</string>
     <string name="currencyNegativeInputException">ערך הקלט לא יכול להיות מתחת ל- 0.</string>
     <string name="currencyInputEmpty">הקלט ריק</string>
+    <string name="addNewPersonButtonText">הוסף איש חדש</string>
+    <string name="extraOptionText">ערכים קליקים ארוכים לאפשרויות נוספות</string>
+    <string name="searchFieldText">לחפש</string>
+    <string name="valueTextHint">ערך</string>
+    <string name="nameTextHint">שם</string>
+    <string name="confirmButtonText">אישור</string>
+    <string name="debtOwedNoItems">אין פריטים</string>
+    <string name="debtOwedMixedCurrencies">מטבעות מעורבים</string>
+    <string name="calculatorNoNumber">לא מספר</string>
+    <string name="calculatorError">שגיאה</string>
 </resources>

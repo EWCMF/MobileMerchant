@@ -59,6 +59,7 @@ public class CalculatorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 tvInput.setText("");
                 tvOutput.setText("");
+                checkBracket = false;
             }
         });
 
@@ -201,11 +202,11 @@ public class CalculatorActivity extends AppCompatActivity {
         bracket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkBracket = false;
 
                 if (checkBracket == true){
                     process = tvInput.getText().toString();
                     tvInput.setText(process + ")");
+                    checkBracket = false;
                 }else {
                     process = tvInput.getText().toString();
                     tvInput.setText(process + "(");
@@ -218,7 +219,17 @@ public class CalculatorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 process = tvInput.getText().toString();
-                
+                for (int i = 0; i < process.length(); i++) {
+                    if (process.charAt(i) == '%') {
+                        process = process.replaceAll("%", "*0.01");
+                        break;
+                    }
+                }
+
+                if (process.isEmpty()) {
+                    tvOutput.setText(R.string.calculatorNoNumber);
+                    return;
+                }
 
                 Context rhino = Context.enter();
                 rhino.setOptimizationLevel(-1);
@@ -229,7 +240,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     Scriptable scriptable = rhino.initStandardObjects();
                     finalResult = rhino.evaluateString(scriptable,process, "javascript", 1, null).toString();
                 }catch (Exception e){
-                    finalResult = "0";
+                    finalResult = getResources().getString(R.string.calculatorError);
 
                 }
 

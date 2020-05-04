@@ -14,25 +14,34 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="96dp"
         android:ems="10"
         android:gravity="center"
         android:hint="@string/valueTextHint"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_item_dialog_name_editText" />
 
-    <Spinner
-        android:id="@+id/create_dialog_spinner"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="32dp"
+        android:background="@drawable/stroke"
         app:layout_constraintBottom_toBottomOf="@+id/create_dialog_value_editText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/create_dialog_value_editText"
-        app:layout_constraintTop_toTopOf="@+id/create_dialog_value_editText" />
+        app:layout_constraintTop_toTopOf="@+id/create_dialog_value_editText">
+
+        <Spinner
+            android:id="@+id/create_dialog_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/custom_spinner" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
         android:id="@+id/create_item_dialog_name_editText"

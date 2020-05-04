@@ -35,9 +35,15 @@
     <string name="addNewPersonButtonText">ADD NEW PERSON</string>
     <string name="extraOptionText">Long click entries for extra options</string>
     <string name="searchFieldText">Search</string>
+    <string name="debtOwedNoItems">No items</string>
     <!-- Create item & person dialog strings here-->
     <string name="valueTextHint">Value</string>
     <string name="nameTextHint">Name</string>
     <string name="confirmButtonText">CONFIRM</string>
+    <string name="debtOwedMixedCurrencies">Mixed currencies</string>
+    <!-- Calculator strings here-->
+    <string name="calculatorNoNumber">No number</string>
+    <string name="calculatorError">Error</string>
+
 
 </resources>
