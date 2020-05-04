@@ -22,8 +22,8 @@
     <string name="valueTextHint">Beløb</string>
     <string name="nameTextHint">Navn</string>
     <string name="confirmButtonText">Bekræft</string>
-    <string name="debtOwedNoItems">Ingen genstan</string>
-    <string name="debtOwedMixedCurrencies">Blandede valuta</string>
+    <string name="debtOwedNoItems">Ingen genstande</string>
+    <string name="debtOwedMixedCurrencies">Blandede valutaer</string>
     <string name="calculatorNoNumber">Intet tal</string>
     <string name="calculatorError">Fejl</string>
 </resources>
