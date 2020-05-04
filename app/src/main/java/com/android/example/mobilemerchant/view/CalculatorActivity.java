@@ -1,28 +1,32 @@
 package com.android.example.mobilemerchant.view;
 
-import android.app.Activity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import com.android.example.mobilemerchant.R;
-
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
-import org.mozilla.javascript.ast.Scope;
 
-public class CalculatorActivity extends Activity {
+
+public class CalculatorActivity extends AppCompatActivity {
+
+    TextView tvInput, tvOutput;
+    Button n0,n00,n1,n2,n3,n4,n5,n6,n7,n8,n9, substract, add, multiply, divide, clear,
+            bracket, percentage, equal, comma;
+    String process;
+    boolean checkBracket;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
 
-        final TextView tvInput, tvOutput;
-        final Button n0,n00,n1,n2,n3,n4,n5,n6,n7,n8,n9, substract, add, multiply, divide, clear,
-                bracket, percentage, equal, comma;
-        final String[] process = new String[0];
-        boolean checkBracket = false;
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.action_bar_layout);
 
 
         n0 = findViewById(R.id.btnNum0);
@@ -53,158 +57,158 @@ public class CalculatorActivity extends Activity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvInput.setText(" ");
-                tvOutput.setText(" ");
+                tvInput.setText("");
+                tvOutput.setText("");
             }
         });
 
         n0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               process[0] = tvInput.getText().toString();
-               tvInput.setText(process[0] + "0");
+               process = tvInput.getText().toString();
+               tvInput.setText(process + "0");
 
             }
         });
         n00.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "00");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "00");
 
             }
         });
         n1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "1");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "1");
 
             }
         });
         n2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "2");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "2");
 
             }
         });
         n3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "3");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "3");
 
             }
         });
         n4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "4");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "4");
 
             }
         });
         n5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "5");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "5");
 
             }
         });
         n6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "6");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "6");
 
             }
         });
         n7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "7");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "7");
 
             }
         });
         n8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "8");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "8");
 
             }
         });
         n9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "9");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "9");
 
             }
         });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "+");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "+");
 
             }
         });
         substract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "-");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "-");
 
             }
         });
         divide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "/");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "/");
 
             }
         });
         multiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "*");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "*");
 
             }
         });
         comma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + ".");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + ".");
 
             }
         });
         percentage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
-                tvInput.setText(process[0] + "%");
+                process = tvInput.getText().toString();
+                tvInput.setText(process + "%");
 
             }
         });
         bracket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean checkBracket = false;
+                checkBracket = false;
 
                 if (checkBracket == true){
-                    process[0] = tvInput.getText().toString();
-                    tvInput.setText(process[0] + ")");
+                    process = tvInput.getText().toString();
+                    tvInput.setText(process + ")");
                 }else {
-                    process[0] = tvInput.getText().toString();
-                    tvInput.setText(process[0] + "(");
+                    process = tvInput.getText().toString();
+                    tvInput.setText(process + "(");
                     checkBracket = true;
                 }
 
@@ -213,7 +217,7 @@ public class CalculatorActivity extends Activity {
         equal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                process[0] = tvInput.getText().toString();
+                process = tvInput.getText().toString();
                 
 
                 Context rhino = Context.enter();
@@ -223,7 +227,7 @@ public class CalculatorActivity extends Activity {
 
                 try {
                     Scriptable scriptable = rhino.initStandardObjects();
-                    finalResult = rhino.evaluateString(scriptable,process[0], "javascript", 1, null).toString();
+                    finalResult = rhino.evaluateString(scriptable,process, "javascript", 1, null).toString();
                 }catch (Exception e){
                     finalResult = "0";
 
@@ -233,8 +237,6 @@ public class CalculatorActivity extends Activity {
 
             }
         });
-
-
 
     }
 }

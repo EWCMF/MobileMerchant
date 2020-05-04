@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
                 if (position == 1) {
                     setLocale("en");
                     Toast.makeText(parent.getContext(), "You have selected English", Toast.LENGTH_SHORT).show();
@@ -51,18 +50,11 @@ public class MainActivity extends AppCompatActivity {
                     setLocale("iw");
                     Toast.makeText(parent.getContext(), "בחרת עברית", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
-
-
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
-
-
 
 
         TextView calculator = findViewById(R.id.calculatorText);

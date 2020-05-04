@@ -13,10 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Add new person"
+        android:text="@string/addNewPersonButtonText"
+        android:backgroundTint="@color/title_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/textView"
+         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/debt_recyclerView"
@@ -28,7 +30,8 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debt_owed_button" />
+        app:layout_constraintTop_toBottomOf="@id/debt_search_editText"
+         />
 
     <EditText
         android:id="@+id/debt_search_editText"
@@ -38,12 +41,14 @@
         android:background="@drawable/rounded_edittext_states"
         android:ems="10"
         android:gravity="center"
-        android:hint="Search"
+        android:hint="@string/searchFieldText"
+        android:textColorHint="@android:color/black"
         android:imeOptions="actionSearch"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="parent"
+         />
 
     <TextView
         android:id="@+id/textView"
@@ -53,9 +58,11 @@
         android:background="@drawable/rounding_small"
         android:gravity="center"
         android:padding="4dp"
-        android:text="Long click entries for extra options"
+        android:text="@string/extraOptionText"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debt_recyclerView" />
+        app:layout_constraintTop_toBottomOf="@id/debt_recyclerView"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
