@@ -16,8 +16,8 @@ import com.android.example.mobilemerchant.logic.CurrencyConverter;
 import com.android.example.mobilemerchant.logic.exceptions.CurrencyNotSupportedException;
 import com.android.example.mobilemerchant.logic.exceptions.NegativeInputException;
 import com.android.example.mobilemerchant.logic.exceptions.SameCurrencyException;
+import com.android.example.mobilemerchant.persistence.AppDatabase;
 
-import java.io.IOException;
 import java.util.Locale;
 
 public class CurrencyConverterActivity extends Activity {
@@ -60,9 +60,10 @@ public class CurrencyConverterActivity extends Activity {
         final double inputNum = Double.parseDouble(input.getText().toString());
         final String currency1 = currencyFromSpinner.getSelectedItem().toString();
         final String currency2 = currencyToSpinner.getSelectedItem().toString();
+
         Thread thread = new Thread(() -> {
             try {
-                currencyConverter.convert(inputNum, currency1, currency2);
+                currencyConverter.convert(inputNum, currency1, currency2, AppDatabase.getDatabase(getApplicationContext()));
                 String inputFormatted = String.format(Locale.getDefault(), "%.2f", currencyConverter.getInput());
                 final String inputText = inputFormatted + " " + currency1;
                 String resultFormatted = String.format(Locale.getDefault(), "%.2f", currencyConverter.getResult());
@@ -77,8 +78,6 @@ public class CurrencyConverterActivity extends Activity {
                     exchangeRate.setText(exchangeRateFormatted);
                     exchangeRate.setVisibility(View.VISIBLE);
                 });
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (SameCurrencyException s) {
                 Handler newToast = new Handler(Looper.getMainLooper());
                 newToast.post(() -> Toast.makeText(getApplicationContext(), R.string.currencySameCurrencyException, Toast.LENGTH_LONG).show());
