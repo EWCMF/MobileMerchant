@@ -16,15 +16,6 @@ import java.util.List;
 
 @Dao
 public interface DebtOwedPersonDao {
-    @Query("SELECT * FROM DebtOwedPerson")
-    LiveData<List<DebtOwedPerson>> getAll();
-
-    @Query("SELECT * FROM DebtOwedPerson WHERE owedID IN (:userIds)")
-    List<DebtOwedPerson> loadAllByIds(int[] userIds);
-
-    @Query("SELECT * FROM DebtOwedPerson WHERE name LIKE :name LIMIT 1")
-    DebtOwedPerson findByName(String name);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(DebtOwedPerson... debtOwedToOthers);
 

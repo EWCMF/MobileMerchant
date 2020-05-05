@@ -23,12 +23,6 @@ public interface DebtOwedItemDao {
     @Delete
     void delete(DebtOwedItem debtOwedItem);
 
-    @Query("SELECT * FROM DebtOwedItem")
-    LiveData<List<DebtOwedItem>> getAll();
-
-    @Query("SELECT * FROM DebtOwedItem WHERE debtOwnerID=:debtOwnerID")
-    LiveData<List<DebtOwedItem>> getAllForName(final int debtOwnerID);
-
     @Query("DELETE FROM DebtOwedItem")
     void nukeTable();
 }
