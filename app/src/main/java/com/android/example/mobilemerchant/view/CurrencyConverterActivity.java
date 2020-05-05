@@ -11,17 +11,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.android.example.mobilemerchant.R;
-import com.android.example.mobilemerchant.logic.CurrencyConverter;
 import com.android.example.mobilemerchant.logic.exceptions.CurrencyNotSupportedException;
 import com.android.example.mobilemerchant.logic.exceptions.NegativeInputException;
 import com.android.example.mobilemerchant.logic.exceptions.SameCurrencyException;
-import com.android.example.mobilemerchant.persistence.AppDatabase;
-
-import java.util.Locale;
+import com.android.example.mobilemerchant.presentation.CurrencyConverterViewModel;
 
 public class CurrencyConverterActivity extends Activity {
-    CurrencyConverter currencyConverter;
+    CurrencyConverterViewModel currencyConverterViewModel;
     EditText input;
     Spinner currencyFromSpinner;
     Spinner currencyToSpinner;
@@ -34,7 +33,8 @@ public class CurrencyConverterActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency);
 
-        currencyConverter = new CurrencyConverter();
+        currencyConverterViewModel = new CurrencyConverterViewModel(getApplication());
+
         currencyFromSpinner = findViewById(R.id.currencyFromSpinner);
         currencyToSpinner = findViewById(R.id.currencyToSpinner);
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.currenciesAvailable,
@@ -50,6 +50,42 @@ public class CurrencyConverterActivity extends Activity {
         exchangeRate = findViewById(R.id.exchangeRateNumberTextView);
         exchangeRate.setVisibility(View.INVISIBLE);
 
+        if (savedInstanceState != null) {
+            currencyFromSpinner.setSelection(savedInstanceState.getInt("spinner1", 0));
+            currencyToSpinner.setSelection(savedInstanceState.getInt("spinner2", 0));
+            inputNumber.setText(savedInstanceState.getString("inputText", ""));
+            inputNumber.setVisibility(View.VISIBLE);
+            result.setText(savedInstanceState.getString("resultText", ""));
+            result.setVisibility(View.VISIBLE);
+            exchangeRate.setText(savedInstanceState.getString("exchangeRateText", ""));
+            exchangeRate.setVisibility(View.VISIBLE);
+        }
+
+        currencyConverterViewModel.addObserver(evt -> {
+            if (evt.getPropertyName().equals("newInput")) {
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(() -> {
+                    inputNumber.setText((String) evt.getNewValue());
+                    inputNumber.setVisibility(View.VISIBLE);
+                });
+
+            }
+            if (evt.getPropertyName().equals("newExchangeRate")) {
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(() -> {
+                    exchangeRate.setText((String) evt.getNewValue());
+                    exchangeRate.setVisibility(View.VISIBLE);
+                });
+
+            }
+            if (evt.getPropertyName().equals("newResult")) {
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(() -> {
+                    result.setText((String) evt.getNewValue());
+                    result.setVisibility(View.VISIBLE);
+                });
+            }
+        });
     }
 
     public void convert(View view) {
@@ -57,38 +93,32 @@ public class CurrencyConverterActivity extends Activity {
             Toast.makeText(getApplicationContext(), R.string.currencyInputEmpty, Toast.LENGTH_LONG).show();
             return;
         }
-        final double inputNum = Double.parseDouble(input.getText().toString());
-        final String currency1 = currencyFromSpinner.getSelectedItem().toString();
-        final String currency2 = currencyToSpinner.getSelectedItem().toString();
 
-        Thread thread = new Thread(() -> {
-            try {
-                currencyConverter.convert(inputNum, currency1, currency2, AppDatabase.getDatabase(getApplicationContext()));
-                String inputFormatted = String.format(Locale.getDefault(), "%.2f", currencyConverter.getInput());
-                final String inputText = inputFormatted + " " + currency1;
-                String resultFormatted = String.format(Locale.getDefault(), "%.2f", currencyConverter.getResult());
-                final String resultText = resultFormatted + " " + currency2;
-                final String exchangeRateFormatted = String.format(Locale.getDefault(), "%.5f", currencyConverter.getExchangeRate());
-                Handler refresh = new Handler(Looper.getMainLooper());
-                refresh.post(() -> {
-                    inputNumber.setText(inputText);
-                    inputNumber.setVisibility(View.VISIBLE);
-                    result.setText(resultText);
-                    result.setVisibility(View.VISIBLE);
-                    exchangeRate.setText(exchangeRateFormatted);
-                    exchangeRate.setVisibility(View.VISIBLE);
-                });
-            } catch (SameCurrencyException s) {
-                Handler newToast = new Handler(Looper.getMainLooper());
-                newToast.post(() -> Toast.makeText(getApplicationContext(), R.string.currencySameCurrencyException, Toast.LENGTH_LONG).show());
-            } catch (CurrencyNotSupportedException c) {
-                Handler newToast = new Handler(Looper.getMainLooper());
-                newToast.post(() -> Toast.makeText(getApplicationContext(), R.string.currencyCurrencyNotSupportedException, Toast.LENGTH_LONG).show());
-            } catch (NegativeInputException n) {
-                Handler newToast = new Handler(Looper.getMainLooper());
-                newToast.post(() -> Toast.makeText(getApplicationContext(), R.string.currencyNegativeInputException, Toast.LENGTH_LONG).show());
-            }
-        });
-        thread.start();
+        double inputNum = Double.parseDouble(input.getText().toString());
+        String currency1 = currencyFromSpinner.getSelectedItem().toString();
+        String currency2 = currencyToSpinner.getSelectedItem().toString();
+
+        try {
+            currencyConverterViewModel.sendRequest(inputNum, currency1, currency2);
+        } catch (SameCurrencyException s) {
+            Handler newToast = new Handler(Looper.getMainLooper());
+            newToast.post(() -> Toast.makeText(getApplicationContext(), R.string.currencySameCurrencyException, Toast.LENGTH_LONG).show());
+        } catch (CurrencyNotSupportedException c) {
+            Handler newToast = new Handler(Looper.getMainLooper());
+            newToast.post(() -> Toast.makeText(getApplicationContext(), R.string.currencyCurrencyNotSupportedException, Toast.LENGTH_LONG).show());
+        } catch (NegativeInputException n) {
+            Handler newToast = new Handler(Looper.getMainLooper());
+            newToast.post(() -> Toast.makeText(getApplicationContext(), R.string.currencyNegativeInputException, Toast.LENGTH_LONG).show());
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("spinner1", currencyFromSpinner.getSelectedItemPosition());
+        outState.putInt("spinner2", currencyToSpinner.getSelectedItemPosition());
+        outState.putString("inputText", inputNumber.getText().toString());
+        outState.putString("resultText", result.getText().toString());
+        outState.putString("exchangeRateText", exchangeRate.getText().toString());
     }
 }
